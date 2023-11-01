@@ -1,0 +1,68 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:InternetShopMobileApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="InternetShopMobileApp.Views.MainView"
+             x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:MainViewModel />
+  </Design.DataContext>
+
+	<Grid Background="#80D9FC">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<!-- Для верхней панели -->
+			<RowDefinition Height="*" />
+			<!-- Для содержимого -->
+			<RowDefinition Height="Auto" />
+			<!-- Для нижней панели -->
+		</Grid.RowDefinitions>
+
+		<StackPanel Grid.Row="0" DockPanel.Dock="Top" Background="#47BAEC" MinHeight="110">
+			<Image Margin="24,8,0,0" Source="/Resources/Снимок экрана 2023-11-01 225537.png" Width="117" Height="34" HorizontalAlignment="Left"/>
+			<Grid Height="40" Margin="24,24,24,0">
+				<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Watermark="Поиск по товарам"/>
+				<Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent">
+					<Image Width="20" Height="20" Source="/Resources/Search.png"/>
+				</Button>
+			</Grid>
+		</StackPanel>
+
+		<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+			<!-- Место для динамического содержимого -->
+			<ContentControl x:Name="DynamicContent" Content="{Binding DynamicContentContent}" />
+		</ScrollViewer>
+
+		<Grid Grid.Row="2" DockPanel.Dock="Bottom" Background="#47BAEC" MaxHeight="64" VerticalAlignment="Bottom">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<Button Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="22,10,22,10">
+				<Image Width="50" Height="50" Source="/Resources/Main.png"/>
+			</Button>
+
+			<Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Margin="22,10,22,10">
+				<Image Width="50" Height="50" Source="/Resources/Catalog.png"/>
+			</Button>
+
+			<Button Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Margin="22,10,22,10">
+				<Image Width="50" Height="50" Source="/Resources/Basket.png"/>
+			</Button>
+
+			<Button Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Margin="22,10,22,10">
+				<Image Width="50" Height="50" Source="/Resources/Profile.png"/>
+			</Button>
+		</Grid>
+
+	</Grid>
+
+	<!--<TextBlock Text="Привет!"/>-->
+</UserControl>
