@@ -3,7 +3,7 @@
 using Avalonia;
 using Avalonia.ReactiveUI;
 
-namespace HelperProject.Desktop;
+namespace InternetShopMobileApp.Desktop;
 
 class Program
 {

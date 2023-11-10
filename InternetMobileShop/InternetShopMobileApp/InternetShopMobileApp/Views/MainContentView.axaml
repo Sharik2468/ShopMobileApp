@@ -2,10 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="InternetShopMobileApp.MainContentView">
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="800"
+			 xmlns:vm="using:InternetShopMobileApp.ViewModels"
+			 xmlns:dtos="using:InternetShopMobileApp.DTOs"
+			 x:DataType="vm:MainContentViewModel"
+             x:Class="InternetShopMobileApp.Views.MainContentView">
 	<DockPanel>
-
 		<Border CornerRadius="12" DockPanel.Dock="Top" Margin="16,40,16,40" Background="#47BAEC">
 			<StackPanel>
 				<ScrollViewer HorizontalScrollBarVisibility="Visible">
@@ -47,29 +49,90 @@
 							</Button>
 							<TextBlock Foreground="Black" TextAlignment="Center" Margin="10,10,0,0" TextWrapping="WrapWithOverflow" Text="Компьютеры"/>
 						</StackPanel>
-
-						<StackPanel Margin="20" HorizontalAlignment="Left" Width="70" Height="70">
-							<Button HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" >
-								<Image Width="50" Height="50" Source="/Resources/ComputerCathegory1.png"/>
-							</Button>
-							<TextBlock Foreground="Black" TextAlignment="Center" Margin="10,10,0,0" TextWrapping="WrapWithOverflow" Text="Компьютеры"/>
-						</StackPanel>
-
-						<StackPanel Margin="20" HorizontalAlignment="Left" Width="70" Height="70">
-							<Button HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" >
-								<Image Width="50" Height="50" Source="/Resources/ComputerCathegory1.png"/>
-							</Button>
-							<TextBlock Foreground="Black" TextAlignment="Center" Margin="10,10,0,0" TextWrapping="WrapWithOverflow" Text="Компьютеры"/>
-						</StackPanel>
-
 					</StackPanel>
 				</ScrollViewer>
 
 			</StackPanel>
 		</Border>
 
+		<TextBlock DockPanel.Dock="Top" Text=" Новые товары" Foreground="Black" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-		<TextBlock Text=" Новые товары" Foreground="Black" FontSize="20" HorizontalAlignment="Center"/>
+		<Button Command="{Binding GoToProductPage}" Padding="0" DockPanel.Dock="Top" Margin="16,20,16,10" Background="Transparent" HorizontalAlignment="Stretch">
+			<Border CornerRadius="12" Background="#47BAEC">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition/>
+						<RowDefinition Height="60"/>
+					</Grid.RowDefinitions>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+
+					<Image Grid.Row="0" Grid.Column="0" Margin="15" Source="avares://InternetShopMobileApp/Resources/monitor.png"/>
+					<TextBlock Foreground="Black" Grid.Row="0" Grid.Column="1" Text="Монитор 1" TextAlignment="Center" VerticalAlignment="Center"/>
+
+					<Border Grid.Row="1" Grid.Column="0" CornerRadius="12" Background="#CFF1FF" Margin="10">
+						<TextBlock Foreground="Black" FontSize="12" Text="12 000р." VerticalAlignment="Center" HorizontalAlignment="Center"/>
+					</Border>
+
+					<Border Grid.Row="1" Grid.Column="1" CornerRadius="12" Background="#CFF1FF" Margin="10">
+						<TextBlock Foreground="Black" FontSize="12" Text="В наличии: 4 шт." VerticalAlignment="Center" HorizontalAlignment="Center"/>
+					</Border>
+
+					<Border Grid.Row="1" Grid.Column="2" CornerRadius="12" Background="#80D9FC" Margin="10">
+						<Button Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+							<TextBlock Foreground="Black" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						</Button>
+					</Border>
+				</Grid>
+			</Border>
+		</Button>
+
+		<ListBox ItemsSource="{Binding Products}" Margin="16,20,16,10" Padding="0" Background="#80D9FC">
+			<ListBox.ItemTemplate>
+				<DataTemplate DataType="dtos:ProductDTO">
+
+					<Border CornerRadius="12" Background="#47BAEC">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition/>
+								<RowDefinition Height="60"/>
+							</Grid.RowDefinitions>
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition/>
+								<ColumnDefinition/>
+								<ColumnDefinition/>
+							</Grid.ColumnDefinitions>
+
+							<Image Grid.Row="0" Grid.Column="0" Margin="15" Source="{Binding ImageSource}"/>
+
+							<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextAlignment="Center" VerticalAlignment="Center"/>
+
+							<Border Grid.Row="1" Grid.Column="0" CornerRadius="12" Background="#CFF1FF" Margin="10">
+								<TextBlock Foreground="Black" FontSize="12" Text="{Binding Price}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+							</Border>
+
+							<Border Grid.Row="1" Grid.Column="1" CornerRadius="12" Background="#CFF1FF" Margin="10">
+								<TextBlock Foreground="Black" FontSize="12" Text="{Binding Availability}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+							</Border>
+
+							<Border Grid.Row="1" Grid.Column="2" CornerRadius="12" Background="#80D9FC" Margin="10">
+								<Button Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+									<TextBlock Foreground="Black" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								</Button>
+							</Border>
+						</Grid>
+					</Border>
+
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
 
 	</DockPanel>
+
 </UserControl>

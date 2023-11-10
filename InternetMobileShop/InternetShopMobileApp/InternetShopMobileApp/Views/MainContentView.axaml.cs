@@ -1,13 +1,17 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Avalonia.ReactiveUI;
+using InternetShopMobileApp.ViewModels;
+using ReactiveUI;
 
-namespace InternetShopMobileApp;
-
-public partial class MainContentView : UserControl
+namespace InternetShopMobileApp.Views
 {
-    public MainContentView()
+    public partial class MainContentView : ReactiveUserControl<MainContentViewModel>
     {
-        InitializeComponent();
+        public MainContentView()
+        {
+            this.WhenActivated(disposables => { });
+            AvaloniaXamlLoader.Load(this);
+        }
     }
 }

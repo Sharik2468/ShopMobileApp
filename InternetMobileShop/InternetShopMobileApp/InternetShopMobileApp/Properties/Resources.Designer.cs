@@ -63,6 +63,16 @@ namespace InternetShopMobileApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] Avatar {
+            get {
+                object obj = ResourceManager.GetObject("Avatar", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Bars1 {
             get {
                 object obj = ResourceManager.GetObject("Bars1", resourceCulture);
@@ -126,6 +136,16 @@ namespace InternetShopMobileApp.Properties {
         internal static byte[] Main {
             get {
                 object obj = ResourceManager.GetObject("Main", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] monitor {
+            get {
+                object obj = ResourceManager.GetObject("monitor", resourceCulture);
                 return ((byte[])(obj));
             }
         }

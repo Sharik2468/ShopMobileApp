@@ -1,0 +1,112 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="800"
+			 xmlns:vm="using:InternetShopMobileApp.ViewModels"
+			 x:DataType="vm:CatalogContentViewModel"
+             x:Class="InternetShopMobileApp.Views.CatalogContentView">
+
+	<DockPanel>
+
+		<Button Command="{Binding GoToProductPage}" Padding="0" DockPanel.Dock="Top" Margin="16,20,16,10" Background="Transparent" HorizontalAlignment="Stretch">
+			<Border CornerRadius="12" Background="#47BAEC">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition/>
+						<RowDefinition Height="60"/>
+					</Grid.RowDefinitions>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+
+					<Image Grid.Row="0" Grid.Column="0" Margin="15" Source="/Resources/monitor.png"/>
+					<TextBlock Foreground="Black" Grid.Row="0" Grid.Column="1" Text="Монитор 1" TextAlignment="Center" VerticalAlignment="Center"/>
+
+					<Border Grid.Row="1" Grid.Column="0" CornerRadius="12" Background="#CFF1FF" Margin="10">
+						<TextBlock Foreground="Black" FontSize="12" Text="12 000р." VerticalAlignment="Center" HorizontalAlignment="Center"/>
+					</Border>
+
+					<Border Grid.Row="1" Grid.Column="1" CornerRadius="12" Background="#CFF1FF" Margin="10">
+						<TextBlock Foreground="Black" FontSize="12" Text="В наличии: 4 шт." VerticalAlignment="Center" HorizontalAlignment="Center"/>
+					</Border>
+
+					<Border Grid.Row="1" Grid.Column="2" CornerRadius="12" Background="#80D9FC" Margin="10">
+						<Button Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+							<TextBlock Foreground="Black" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						</Button>
+					</Border>
+				</Grid>
+			</Border>
+		</Button>
+
+		<Border CornerRadius="12" DockPanel.Dock="Top" Margin="16,20,16,10" Background="#47BAEC">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition Height="60"/>
+				</Grid.RowDefinitions>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+
+				<Image Grid.Row="0" Grid.Column="0" Margin="15" Source="/Resources/monitor.png"/>
+				<TextBlock Foreground="Black" Grid.Row="0" Grid.Column="1" Text="Монитор 1" TextAlignment="Center" VerticalAlignment="Center"/>
+
+				<Border Grid.Row="1" Grid.Column="0" CornerRadius="12" Background="#CFF1FF" Margin="10">
+					<TextBlock Foreground="Black" FontSize="12" Text="12 000р." VerticalAlignment="Center" HorizontalAlignment="Center"/>
+				</Border>
+
+				<Border Grid.Row="1" Grid.Column="1" CornerRadius="12" Background="#CFF1FF" Margin="10">
+					<TextBlock Foreground="Black" FontSize="12" Text="В наличии: 4 шт." VerticalAlignment="Center" HorizontalAlignment="Center"/>
+				</Border>
+
+				<Border Grid.Row="1" Grid.Column="2" CornerRadius="12" Background="#80D9FC" Margin="10">
+					<Button Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<TextBlock Foreground="Black" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+					</Button>
+				</Border>
+			</Grid>
+		</Border>
+
+		<Border CornerRadius="12" DockPanel.Dock="Top" Margin="16,20,16,10" Background="#47BAEC">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition Height="60"/>
+				</Grid.RowDefinitions>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+
+				<Image Grid.Row="0" Grid.Column="0" Margin="15" Source="/Resources/monitor.png"/>
+				<TextBlock Foreground="Black" Grid.Row="0" Grid.Column="1" Text="Монитор 1" TextAlignment="Center" VerticalAlignment="Center"/>
+
+				<Border Grid.Row="1" Grid.Column="0" CornerRadius="12" Background="#CFF1FF" Margin="10">
+					<TextBlock Foreground="Black" FontSize="12" Text="12 000р." VerticalAlignment="Center" HorizontalAlignment="Center"/>
+				</Border>
+
+				<Border Grid.Row="1" Grid.Column="1" CornerRadius="12" Background="#CFF1FF" Margin="10">
+					<TextBlock Foreground="Black" FontSize="12" Text="В наличии: 4 шт." VerticalAlignment="Center" HorizontalAlignment="Center"/>
+				</Border>
+
+				<Border Grid.Row="1" Grid.Column="2" CornerRadius="12" Background="#80D9FC" Margin="10">
+					<Button Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+						<TextBlock Foreground="Black" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+					</Button>
+				</Border>
+			</Grid>
+		</Border>
+
+	</DockPanel>
+
+</UserControl>

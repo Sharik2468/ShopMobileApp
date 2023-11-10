@@ -1,83 +1,73 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+	</PropertyGroup>
 
-  
-  <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
-  </ItemGroup>
 
-  
-  <ItemGroup>
-    <None Remove="Resources\Bars.png" />
-    <None Remove="Resources\Bars1.png" />
-    <None Remove="Resources\Basket.png" />
-    <None Remove="Resources\BitCathegory.png" />
-    <None Remove="Resources\BitCathegory1.png" />
-    <None Remove="Resources\Catalog.png" />
-    <None Remove="Resources\ComputerCathegory.png" />
-    <None Remove="Resources\ComputerCathegory1.png" />
-    <None Remove="Resources\Lenovo-Air-2018-display 1.png" />
-    <None Remove="Resources\Main.png" />
-    <None Remove="Resources\Profile.png" />
-    <None Remove="Resources\Search.png" />
-    <None Remove="Resources\SmartphoneCathegory.png" />
-    <None Remove="Resources\SmartphoneCathegory1.png" />
-    <None Remove="Resources\TVCathegory.png" />
-    <None Remove="Resources\TVCathegory1.png" />
-    <None Remove="Resources\Снимок экрана 2023-11-01 225537.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
+	</ItemGroup>
 
-  
-  <ItemGroup>
-    <ApplicationDefinition Include="Resources\Bars.png" />
-    <ApplicationDefinition Include="Resources\BitCathegory.png" />
-    <ApplicationDefinition Include="Resources\ComputerCathegory.png" />
-    <ApplicationDefinition Include="Resources\SmartphoneCathegory.png" />
-    <ApplicationDefinition Include="Resources\TVCathegory.png" />
-  </ItemGroup>
 
-  
-  <ItemGroup>
-    <AvaloniaResource Include="Resources\Bars1.png" />
-    <AvaloniaResource Include="Resources\Basket.png" />
-    <AvaloniaResource Include="Resources\BitCathegory1.png" />
-    <AvaloniaResource Include="Resources\Catalog.png" />
-    <AvaloniaResource Include="Resources\ComputerCathegory1.png" />
-    <AvaloniaResource Include="Resources\Lenovo-Air-2018-display 1.png" />
-    <AvaloniaResource Include="Resources\Main.png" />
-    <AvaloniaResource Include="Resources\Profile.png" />
-    <AvaloniaResource Include="Resources\Search.png" />
-    <AvaloniaResource Include="Resources\SmartphoneCathegory1.png" />
-    <AvaloniaResource Include="Resources\TVCathegory1.png" />
-    <AvaloniaResource Include="Resources\Снимок экрана 2023-11-01 225537.png" />
-  </ItemGroup>
+	<ItemGroup>
+	  <None Remove="Resources\Avatar.png" />
+	  <None Remove="Resources\Bars1.png" />
+	  <None Remove="Resources\Basket.png" />
+	  <None Remove="Resources\BitCathegory1.png" />
+	  <None Remove="Resources\Catalog.png" />
+	  <None Remove="Resources\ComputerCathegory1.png" />
+	  <None Remove="Resources\Lenovo-Air-2018-display 1.png" />
+	  <None Remove="Resources\Main.png" />
+	  <None Remove="Resources\monitor.png" />
+	  <None Remove="Resources\Profile.png" />
+	  <None Remove="Resources\Search.png" />
+	  <None Remove="Resources\SmartphoneCathegory1.png" />
+	  <None Remove="Resources\TVCathegory1.png" />
+	  <None Remove="Resources\Снимок экрана 2023-11-01 225537.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+	  <AvaloniaResource Include="Resources\Avatar.png" />
+	  <AvaloniaResource Include="Resources\Bars1.png" />
+	  <AvaloniaResource Include="Resources\Basket.png" />
+	  <AvaloniaResource Include="Resources\BitCathegory1.png" />
+	  <AvaloniaResource Include="Resources\Catalog.png" />
+	  <AvaloniaResource Include="Resources\ComputerCathegory1.png" />
+	  <AvaloniaResource Include="Resources\Lenovo-Air-2018-display 1.png" />
+	  <AvaloniaResource Include="Resources\Main.png" />
+	  <AvaloniaResource Include="Resources\monitor.png" />
+	  <AvaloniaResource Include="Resources\Profile.png" />
+	  <AvaloniaResource Include="Resources\Search.png" />
+	  <AvaloniaResource Include="Resources\SmartphoneCathegory1.png" />
+	  <AvaloniaResource Include="Resources\TVCathegory1.png" />
+	  <AvaloniaResource Include="Resources\Снимок экрана 2023-11-01 225537.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+		<PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
+		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Properties\Resources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Resources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
 </Project>

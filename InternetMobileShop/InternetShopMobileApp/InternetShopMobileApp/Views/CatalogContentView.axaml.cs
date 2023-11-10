@@ -6,9 +6,9 @@ using ReactiveUI;
 
 namespace InternetShopMobileApp.Views
 {
-    public partial class ProductContentView : ReactiveUserControl<ProductContentViewModel>
+    public partial class CatalogContentView : ReactiveUserControl<CatalogContentViewModel>
     {
-        public ProductContentView()
+        public CatalogContentView()
         {
             this.WhenActivated(disposables => { });
             AvaloniaXamlLoader.Load(this);

@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="800"
+             x:Class="InternetShopMobileApp.Views.ProfileContentView">
+
+	<DockPanel>
+		<Border Margin="16" VerticalAlignment="Top" CornerRadius="12" DockPanel.Dock="Top" Background="White">
+			<Grid VerticalAlignment="Top" HorizontalAlignment="Center">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				
+				<Image Grid.Row="0" Grid.Column="0" Height="125" Source="/Resources/Avatar.png" HorizontalAlignment="Center" Margin="0,24,0,0"/>
+				<TextBlock Grid.Row="1" Grid.Column="0" Foreground="Black" FontSize="16" HorizontalAlignment="Center" TextAlignment="Center" Text="Здравствуйте, гость!"/>
+				<Button Content="Войти" Foreground="Black"  Grid.Row="2" HorizontalAlignment="Center" Grid.Column="0"/>
+				<Button Content="Зарегестрироваться" Foreground="Black" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" Margin="0,0,0,24"/>
+				
+			</Grid>
+		</Border>
+	</DockPanel>
+
+</UserControl>
