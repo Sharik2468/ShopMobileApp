@@ -3,17 +3,30 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
 using InternetShopMobileApp.Converters;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Linq;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
+using System.Windows.Input;
 
 namespace InternetShopMobileApp.ViewModels
 {
     public class MainContentViewModel : ReactiveObject, IRoutableViewModel
     {
-        public ObservableCollection<ProductDTO> Products { get; }
+        private ProductData _selectedProduct;
+        public ProductData SelectedProduct
+        {
+            get => _selectedProduct;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selectedProduct, value);
+                HostScreen.Router.Navigate.Execute(new ProductContentViewModel(HostScreen, SelectedProduct));
+            }
+        }
 
         // Reference to IScreen that owns the routable view model.
         public IScreen HostScreen { get; }
@@ -21,28 +34,43 @@ namespace InternetShopMobileApp.ViewModels
         // Unique identifier for the routable view model.
         public string UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
 
+        public ObservableCollection<ProductData> Products { get; set; }
+
+        public async void LoadProducts()
+        {
+            HttpClient client = new HttpClient();
+            try
+            {
+                //client.Timeout = TimeSpan.FromSeconds(30); // Например, 30 секунд
+
+                var response = await client.GetAsync(URLHelper.APIURL + "/api/Product");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    var products = JsonConvert.DeserializeObject<List<ProductData>>(jsonResponse).Take(10);
+                    foreach (var product in products)
+                    {
+                        Products.Add(product);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                client.Dispose();
+            }
+        }
+
         public MainContentViewModel(IScreen screen)
         {
             HostScreen = screen;
-            GoToProductPage = ReactiveCommand.Create(RunTheThing);
 
-            // Initialize the Products collection with example data
-            Products = new ObservableCollection<ProductDTO>
-            {
-                // Example data
-                new ProductDTO { ImageSource = ImagePathConverter.LoadFromResource(new Uri("avares://InternetShopMobileApp/Resources/monitor.png")), Title = "Монитор 1", Price = "12 000р.", Availability = "В наличии: 4 шт." },
-                new ProductDTO { ImageSource = ImagePathConverter.LoadFromResource(new Uri("avares://InternetShopMobileApp/Resources/monitor.png")), Title = "Монитор 1", Price = "12 000р.", Availability = "В наличии: 4 шт." },
-                new ProductDTO { ImageSource = ImagePathConverter.LoadFromResource(new Uri("avares://InternetShopMobileApp/Resources/monitor.png")), Title = "Монитор 1", Price = "12 000р.", Availability = "В наличии: 4 шт." },
-                // Add other products here
-            };
+            Products = new ObservableCollection<ProductData>();
+            LoadProducts();
         }
 
-        private IRoutableViewModel RunTheThing()
-        {
-            HostScreen.Router.Navigate.Execute(new ProductContentViewModel(HostScreen));
-            return null;
-        }
-
-        public ReactiveCommand<Unit, IRoutableViewModel> GoToProductPage { get; }
     }
 }

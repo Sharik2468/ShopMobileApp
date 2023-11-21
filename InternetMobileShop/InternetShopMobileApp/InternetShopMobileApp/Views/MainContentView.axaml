@@ -5,8 +5,13 @@
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="800"
 			 xmlns:vm="using:InternetShopMobileApp.ViewModels"
 			 xmlns:dtos="using:InternetShopMobileApp.DTOs"
+			 xmlns:conv="using:InternetShopMobileApp.Converters"
 			 x:DataType="vm:MainContentViewModel"
+			 x:Name="MainContentViewControl"
              x:Class="InternetShopMobileApp.Views.MainContentView">
+	<UserControl.Resources>
+		<conv:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
+	</UserControl.Resources>
 	<DockPanel>
 		<Border CornerRadius="12" DockPanel.Dock="Top" Margin="16,40,16,40" Background="#47BAEC">
 			<StackPanel>
@@ -15,7 +20,7 @@
 
 						<Border CornerRadius="12" Margin="20" HorizontalAlignment="Left" Background="White" Width="70" Height="70">
 							<StackPanel >
-								<Button HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" >
+								<Button HorizontalAlignment="Center" VerticalAlignment="Center"  >
 									<Image Width="50" Height="50" Source="/Resources/Bars1.png"/>
 								</Button>
 								<TextBlock Foreground="Black" TextAlignment="Center" Margin="10,10,0,0" TextWrapping="WrapWithOverflow" Text="Каталог товаров"/>
@@ -57,45 +62,16 @@
 
 		<TextBlock DockPanel.Dock="Top" Text=" Новые товары" Foreground="Black" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-		<Button Command="{Binding GoToProductPage}" Padding="0" DockPanel.Dock="Top" Margin="16,20,16,10" Background="Transparent" HorizontalAlignment="Stretch">
-			<Border CornerRadius="12" Background="#47BAEC">
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition/>
-						<RowDefinition Height="60"/>
-					</Grid.RowDefinitions>
 
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-					</Grid.ColumnDefinitions>
-
-					<Image Grid.Row="0" Grid.Column="0" Margin="15" Source="avares://InternetShopMobileApp/Resources/monitor.png"/>
-					<TextBlock Foreground="Black" Grid.Row="0" Grid.Column="1" Text="Монитор 1" TextAlignment="Center" VerticalAlignment="Center"/>
-
-					<Border Grid.Row="1" Grid.Column="0" CornerRadius="12" Background="#CFF1FF" Margin="10">
-						<TextBlock Foreground="Black" FontSize="12" Text="12 000р." VerticalAlignment="Center" HorizontalAlignment="Center"/>
-					</Border>
-
-					<Border Grid.Row="1" Grid.Column="1" CornerRadius="12" Background="#CFF1FF" Margin="10">
-						<TextBlock Foreground="Black" FontSize="12" Text="В наличии: 4 шт." VerticalAlignment="Center" HorizontalAlignment="Center"/>
-					</Border>
-
-					<Border Grid.Row="1" Grid.Column="2" CornerRadius="12" Background="#80D9FC" Margin="10">
-						<Button Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
-							<TextBlock Foreground="Black" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-						</Button>
-					</Border>
-				</Grid>
-			</Border>
-		</Button>
-
-		<ListBox ItemsSource="{Binding Products}" Margin="16,20,16,10" Padding="0" Background="#80D9FC">
+		<ListBox ItemsSource="{Binding Products}"
+				 Background="#80D9FC"
+				 Margin="16,20,16,10"
+				 SelectionChanged="ListBox_SelectionChanged"
+				 Padding="0"
+				 SelectedItem="{Binding SelectedProduct}">
 			<ListBox.ItemTemplate>
-				<DataTemplate DataType="dtos:ProductDTO">
-
-					<Border CornerRadius="12" Background="#47BAEC">
+				<DataTemplate DataType="dtos:ProductData">
+					<Border x:Name="ClickableBorder" CornerRadius="12" Background="#47BAEC">
 						<Grid>
 							<Grid.RowDefinitions>
 								<RowDefinition/>
@@ -108,16 +84,16 @@
 								<ColumnDefinition/>
 							</Grid.ColumnDefinitions>
 
-							<Image Grid.Row="0" Grid.Column="0" Margin="15" Source="{Binding ImageSource}"/>
+							<Image Grid.Row="0" Grid.Column="0" Margin="15" Source="{Binding Image, Converter={StaticResource ByteArrayToImageConverter}}"/>
 
-							<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Title}" TextAlignment="Center" VerticalAlignment="Center"/>
+							<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding NameProduct}" TextAlignment="Center" VerticalAlignment="Center"/>
 
 							<Border Grid.Row="1" Grid.Column="0" CornerRadius="12" Background="#CFF1FF" Margin="10">
-								<TextBlock Foreground="Black" FontSize="12" Text="{Binding Price}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								<TextBlock Foreground="Black" FontSize="12" Text="{Binding MarketPriceProduct}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 							</Border>
 
 							<Border Grid.Row="1" Grid.Column="1" CornerRadius="12" Background="#CFF1FF" Margin="10">
-								<TextBlock Foreground="Black" FontSize="12" Text="{Binding Availability}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								<TextBlock Foreground="Black" FontSize="12" Text="{Binding NumberInStock}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 							</Border>
 
 							<Border Grid.Row="1" Grid.Column="2" CornerRadius="12" Background="#80D9FC" Margin="10">
@@ -127,11 +103,9 @@
 							</Border>
 						</Grid>
 					</Border>
-
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
-
 
 	</DockPanel>
 
