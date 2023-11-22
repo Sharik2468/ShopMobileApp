@@ -12,6 +12,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using System.Windows.Input;
+using System.Globalization;
 
 namespace InternetShopMobileApp.ViewModels
 {
@@ -41,8 +42,6 @@ namespace InternetShopMobileApp.ViewModels
             HttpClient client = new HttpClient();
             try
             {
-                //client.Timeout = TimeSpan.FromSeconds(30); // Например, 30 секунд
-
                 var response = await client.GetAsync(URLHelper.APIURL + "/api/Product");
                 if (response.IsSuccessStatusCode)
                 {

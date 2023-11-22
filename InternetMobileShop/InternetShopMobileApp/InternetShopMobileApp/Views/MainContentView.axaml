@@ -66,7 +66,6 @@
 		<ListBox ItemsSource="{Binding Products}"
 				 Background="#80D9FC"
 				 Margin="16,20,16,10"
-				 SelectionChanged="ListBox_SelectionChanged"
 				 Padding="0"
 				 SelectedItem="{Binding SelectedProduct}">
 			<ListBox.ItemTemplate>

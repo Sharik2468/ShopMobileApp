@@ -14,6 +14,18 @@ namespace InternetShopMobileApp.ViewModels
 {
     public class ProductContentViewModel : ReactiveObject, IRoutableViewModel
     {
+        private ProductData _selectedProduct;
+        public ProductData SelectedProduct
+        {
+            get => _selectedProduct;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selectedProduct, value);
+            }
+        }
+
+        public string AvailableStockText => $"В наличии: {SelectedProduct?.NumberInStock ?? 0} шт.";
+
         // Reference to IScreen that owns the routable view model.
         public IScreen HostScreen { get; }
 
@@ -23,6 +35,7 @@ namespace InternetShopMobileApp.ViewModels
         public ProductContentViewModel(IScreen screen, ProductData productData = null)
         {
             HostScreen = screen;
+            SelectedProduct = productData;
         }
     }
 }

@@ -12,10 +12,15 @@
 		<conv:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
 	</UserControl.Resources>
 	<DockPanel>
-		<ListBox ItemsSource="{Binding Products}" Margin="16,20,16,10" Padding="0" Background="#80D9FC">
+		
+		<ListBox ItemsSource="{Binding Products}"
+				 Background="#80D9FC"
+				 Margin="16,20,16,10"
+				 Padding="0"
+				 SelectedItem="{Binding SelectedProduct}">
 			<ListBox.ItemTemplate>
 				<DataTemplate DataType="dtos:ProductData">
-					<Border CornerRadius="12" Background="#47BAEC">
+					<Border x:Name="ClickableBorder" CornerRadius="12" Background="#47BAEC">
 						<Grid>
 							<Grid.RowDefinitions>
 								<RowDefinition/>
@@ -50,6 +55,7 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+		
 	</DockPanel>
 
 </UserControl>

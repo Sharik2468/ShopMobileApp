@@ -27,8 +27,8 @@
 		<StackPanel Grid.Row="0" DockPanel.Dock="Top" Background="#47BAEC" MinHeight="110">
 			<Image Margin="24,8,0,0" Source="/Resources/Снимок экрана 2023-11-01 225537.png" Width="117" Height="34" HorizontalAlignment="Left"/>
 			<Grid Height="40" Margin="24,24,24,0">
-				<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Watermark="Поиск по товарам"/>
-				<Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent">
+				<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Watermark="Поиск по товарам" Text="{Binding SelectedKeyword}"/>
+				<Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Command="{Binding NavigateToSearchCatalog}">
 					<Image Width="20" Height="20" Source="/Resources/Search.png"/>
 				</Button>
 			</Grid>

@@ -3,13 +3,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+			 xmlns:vm="using:InternetShopMobileApp.ViewModels"
+			 xmlns:conv="using:InternetShopMobileApp.Converters"
+			 x:DataType="vm:ProductContentViewModel"
              x:Class="InternetShopMobileApp.Views.ProductContentView">
-
+	<UserControl.Resources>
+		<conv:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
+	</UserControl.Resources>
 	<DockPanel>
 		<Border CornerRadius="12" Background="White" DockPanel.Dock="Top" Margin="16">
 			<StackPanel>
-				<Image Margin="80,18,80,20" Source="/Resources/Lenovo-Air-2018-display 1.png"/>
-				<TextBlock Margin="16,0,16,24" FontSize="20" Text="Игровой ноутбук HP"/>
+				<Image Margin="80,18,80,20" Source="{Binding SelectedProduct.Image, Converter={StaticResource ByteArrayToImageConverter}}"/>
+				<TextBlock Margin="16,0,16,24" FontSize="20" Text="{Binding SelectedProduct.NameProduct}"/>
 				<Grid Margin="0,0,0,24">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
@@ -18,11 +23,11 @@
 					</Grid.ColumnDefinitions>
 
 					<Border Margin="10" Height="42" CornerRadius="12" Grid.Column="0" Background="#CFF1FF">
-						<TextBlock Foreground="Black" FontSize="12" Text="12 000р." VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						<TextBlock Foreground="Black" FontSize="12" Text="{Binding SelectedProduct.MarketPriceProduct}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 					</Border>
 
 					<Border Margin="10" Height="42" CornerRadius="12" Grid.Column="1" Background="#CFF1FF" >
-						<TextBlock Foreground="Black" FontSize="12" Text="В наличии: 4 шт." VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						<TextBlock Foreground="Black" FontSize="12" Text="{Binding AvailableStockText}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 					</Border>
 
 					<Border Margin="10" Height="42" CornerRadius="12" Grid.Column="2" Background="#80D9FC" >
@@ -35,8 +40,8 @@
 		</Border>
 
 		<Border CornerRadius="12" Background="White" DockPanel.Dock="Top" Margin="16">
-			<TextBlock Foreground="Black" FontSize="16" Margin="16" TextWrapping="WrapWithOverflow" Text="Этот игровой ноутбук создан для тех, кто хочет получить качественное и производительное компьютерное устройство с наиболее востребованным функционалом. Данная модель полностью удовлетворяет данные требования. Надежный накопитель предоставляет вам возможности для долговременного хранения необходимой виртуальной информации. Устройство оборудовано веб-камерой и микрофоном, благодаря которым вы сможете организовывать видеоконференции с партнерами по играм и коллегами по работе."/>
+			<TextBlock Foreground="Black" FontSize="16" Margin="16" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProduct.Description}"/>
 		</Border>
 	</DockPanel>
-	
+
 </UserControl>
