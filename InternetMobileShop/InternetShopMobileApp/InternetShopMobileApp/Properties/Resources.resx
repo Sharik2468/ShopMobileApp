@@ -136,6 +136,9 @@
   <data name="ComputerCathegory1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ComputerCathegory1.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="DeleteOutlined" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DeleteOutlined.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Lenovo-Air-2018-display 1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Lenovo-Air-2018-display 1.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

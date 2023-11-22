@@ -17,6 +17,7 @@ namespace InternetShopMobileApp
             ProductContentViewModel productPageViewModel => new ProductContentView { DataContext = productPageViewModel },
             ProfileContentViewModel profilePageViewModel => new ProfileContentView { DataContext = profilePageViewModel },
             CatalogContentViewModel catalogPageViewModel => new CatalogContentView { DataContext = catalogPageViewModel },
+            BasketContentViewModel basketPageViewModel => new BasketContentView { DataContext = basketPageViewModel },
             // ... добавьте другие модели представлений и представления здесь ...
             _ => throw new ArgumentOutOfRangeException(nameof(viewModel), $"Could not find view for view model type {viewModel.GetType()}."),
         };

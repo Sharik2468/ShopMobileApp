@@ -123,6 +123,16 @@ namespace InternetShopMobileApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] DeleteOutlined {
+            get {
+                object obj = ResourceManager.GetObject("DeleteOutlined", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Lenovo_Air_2018_display_1 {
             get {
                 object obj = ResourceManager.GetObject("Lenovo-Air-2018-display 1", resourceCulture);

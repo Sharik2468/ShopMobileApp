@@ -19,6 +19,7 @@
 	  <None Remove="Resources\BitCathegory1.png" />
 	  <None Remove="Resources\Catalog.png" />
 	  <None Remove="Resources\ComputerCathegory1.png" />
+	  <None Remove="Resources\DeleteOutlined.png" />
 	  <None Remove="Resources\Lenovo-Air-2018-display 1.png" />
 	  <None Remove="Resources\Main.png" />
 	  <None Remove="Resources\monitor.png" />
@@ -37,6 +38,7 @@
 	  <AvaloniaResource Include="Resources\BitCathegory1.png" />
 	  <AvaloniaResource Include="Resources\Catalog.png" />
 	  <AvaloniaResource Include="Resources\ComputerCathegory1.png" />
+	  <AvaloniaResource Include="Resources\DeleteOutlined.png" />
 	  <AvaloniaResource Include="Resources\Lenovo-Air-2018-display 1.png" />
 	  <AvaloniaResource Include="Resources\Main.png" />
 	  <AvaloniaResource Include="Resources\monitor.png" />

@@ -60,7 +60,7 @@
 				<Image Width="50" Height="50" Source="/Resources/Catalog.png"/>
 			</Button>
 
-			<Button Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Margin="22,10,22,10">
+			<Button Command="{Binding NavigateToBasket}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Margin="22,10,22,10">
 				<Image Width="50" Height="50" Source="/Resources/Basket.png"/>
 			</Button>
 

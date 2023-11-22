@@ -25,6 +25,7 @@ public class MainViewModel : ReactiveObject, IScreen
     // The command that navigates a user to first view model.
 
     public ReactiveCommand<Unit, IRoutableViewModel> NavigateToMain { get; }
+    public ReactiveCommand<Unit, IRoutableViewModel> NavigateToBasket { get; }
     public ReactiveCommand<Unit, IRoutableViewModel> NavigateToProfile { get; }
     public ReactiveCommand<Unit, IRoutableViewModel> NavigateToCatalog { get; }
     public ReactiveCommand<Unit, IRoutableViewModel> NavigateToSearchCatalog { get; }
@@ -45,6 +46,9 @@ public class MainViewModel : ReactiveObject, IScreen
 
         NavigateToMain = ReactiveCommand.CreateFromObservable(
             () => Router.Navigate.Execute(new MainContentViewModel(this))
+        );
+        NavigateToBasket = ReactiveCommand.CreateFromObservable(
+            () => Router.Navigate.Execute(new BasketContentViewModel(this))
         );
         NavigateToProfile = ReactiveCommand.CreateFromObservable(
             () => Router.Navigate.Execute(new ProfileContentViewModel(this))
