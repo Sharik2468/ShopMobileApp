@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="800"
+			 xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
              x:Class="InternetShopMobileApp.Views.BasketContentView">
 	<DockPanel Background="AliceBlue">
 
@@ -21,10 +22,11 @@
 		<Border CornerRadius="12"
 				Background="White"
 				DockPanel.Dock="Top"
-				Margin="16">
+				Margin="16"
+				Classes="Card Hoverable">
 			<StackPanel>
 				<Grid Margin="0,0,0,24">
-					
+
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
@@ -34,10 +36,10 @@
 						<RowDefinition/>
 						<RowDefinition/>
 					</Grid.RowDefinitions>
-					
+
 					<Image Margin="12" Grid.Row="0"/>
-					<TextBlock Margin="12" FontSize="20" 
-							   Text="aaa" Grid.Row="0" 
+					<TextBlock Margin="12" FontSize="20"
+							   Text="aaa" Grid.Row="0"
 							   Grid.Column="1" Grid.ColumnSpan="2"/>
 					<Image Grid.Row="0" VerticalAlignment="Top"
 						   Grid.Column="2" HorizontalAlignment="Right"
@@ -49,17 +51,18 @@
 							Margin="12" Maximum="20"
 							Minimum="0"/>
 
-					<Border Margin="10" Height="42" 
-							CornerRadius="12" Grid.Column="1" 
+					<Border Margin="10" Height="42"
+							CornerRadius="12" Grid.Column="1"
 							Background="#CFF1FF" Grid.Row="1">
 						<TextBlock Foreground="Black" FontSize="12" Text="aaa" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 					</Border>
 
-					<Border Margin="10" Height="42" 
-							CornerRadius="12" Grid.Column="2" 
-							Background="#80D9FC" Grid.Row="1">
-						<Button Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
-							<TextBlock Foreground="Black" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+					<Border Margin="10" Height="42"
+							CornerRadius="12" Grid.Column="2"
+							Background="#80D9FC" Grid.Row="1"
+							Classes="Card Hoverable">
+						<Button Classes="Accent" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+							<TextBlock Foreground="Black" Margin="-8,-8,0,0" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 						</Button>
 					</Border>
 				</Grid>
@@ -70,32 +73,57 @@
 			<Border CornerRadius="12"
 			Background="White"
 			DockPanel.Dock="Top"
-			Margin="16">
-				<StackPanel>
-					<Image Margin="80,18,80,20" />
-					<TextBlock Margin="16,0,16,24" FontSize="20" Text="aaa"/>
+			Margin="16"
+			Classes="Card Hoverable">
+				<suki:GroupBox>
+					<suki:GroupBox.Header>
+						<TextBlock Text="Условия заказа" FontSize="16"/>
+					</suki:GroupBox.Header>
 					<Grid Margin="0,0,0,24">
+
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*"/>
 							<ColumnDefinition Width="*"/>
-							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
 
-						<Border Margin="10" Height="42" CornerRadius="12" Grid.Column="0" Background="#CFF1FF">
-							<TextBlock Foreground="Black" FontSize="12" Text="aaa" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-						</Border>
+						<StackPanel Grid.Row="0"
+									Grid.Column="0"
+									Margin="12">
+							<TextBlock FontSize="10"
+									   Foreground="Gray"
+									   Text="Итого:" />
+							<TextBlock FontSize="14"
+									   Text="aaa Товаров" />
+						</StackPanel>
+						<TextBlock Grid.Column="2"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Right"
+								   Text="aaa"/>
 
-						<Border Margin="10" Height="42" CornerRadius="12" Grid.Column="1" Background="#CFF1FF" >
-							<TextBlock Foreground="Black" FontSize="12" Text="aaa" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-						</Border>
-
-						<Border Margin="10" Height="42" CornerRadius="12" Grid.Column="2" Background="#80D9FC" >
-							<Button Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
-								<TextBlock Foreground="Black" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						<Border Margin="10" Height="42"
+							CornerRadius="12" Grid.Column="0"
+							Background="#80D9FC" Grid.Row="1"
+							Grid.ColumnSpan="2"
+							Classes="Card Hoverable">
+							<Button Classes="Accent" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+								<TextBlock Foreground="Black" Margin="-8,-8,0,0" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 							</Button>
 						</Border>
+
+
+						<Button BorderBrush="#80D9FC" 
+								VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+								Content="Магазин: Ул. Маршала Василевского. Д. 53"
+								Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+								Height="50" CornerRadius="12"/>
+
 					</Grid>
-				</StackPanel>
+				</suki:GroupBox>
 			</Border>
 		</StackPanel>
 

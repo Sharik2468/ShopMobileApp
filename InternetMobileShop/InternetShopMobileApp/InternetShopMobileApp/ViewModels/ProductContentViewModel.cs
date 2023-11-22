@@ -1,11 +1,15 @@
-﻿using InternetShopMobileApp.DTOs;
+﻿using Avalonia.Controls.Notifications;
+using Avalonia.Interactivity;
+using InternetShopMobileApp.DTOs;
 using Newtonsoft.Json;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Net.Http;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +18,9 @@ namespace InternetShopMobileApp.ViewModels
 {
     public class ProductContentViewModel : ReactiveObject, IRoutableViewModel
     {
+        WindowNotificationManager notificationManager;
+        public ReactiveCommand<Unit, IRoutableViewModel> ShowNotify { get; }
+
         private ProductData _selectedProduct;
         public ProductData SelectedProduct
         {
@@ -36,6 +43,12 @@ namespace InternetShopMobileApp.ViewModels
         {
             HostScreen = screen;
             SelectedProduct = productData;
+        }
+
+        private void ShowNotification()
+        {
+            var notif = new Avalonia.Controls.Notifications.Notification("title", "message");
+            notificationManager.Show(notif);
         }
     }
 }
