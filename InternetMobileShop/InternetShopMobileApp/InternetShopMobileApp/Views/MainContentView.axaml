@@ -117,8 +117,8 @@
 							</Border>
 
 							<Border Grid.Row="1" Grid.Column="2" CornerRadius="12" Background="#80D9FC" Margin="10">
-								<Button Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
-									<TextBlock Foreground="Black" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								<Button Classes="Accent" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+									<TextBlock Foreground="Black" Margin="-8,-8,0,0" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 								</Button>
 							</Border>
 						</Grid>

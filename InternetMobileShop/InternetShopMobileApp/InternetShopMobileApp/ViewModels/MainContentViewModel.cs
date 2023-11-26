@@ -46,7 +46,9 @@ namespace InternetShopMobileApp.ViewModels
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var products = JsonConvert.DeserializeObject<List<ProductData>>(jsonResponse).Take(10);
+                    var products = JsonConvert.DeserializeObject<List<ProductData>>(jsonResponse);
+                    products.Reverse();
+                    products.Take(10);
                     foreach (var product in products)
                     {
                         Products.Add(product);

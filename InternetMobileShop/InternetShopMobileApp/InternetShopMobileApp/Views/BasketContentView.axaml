@@ -5,7 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="800"
 			 xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
              x:Class="InternetShopMobileApp.Views.BasketContentView">
-	<DockPanel Background="AliceBlue">
+	<DockPanel>
 
 		<StackPanel Orientation="Horizontal"
 					Spacing="8"
@@ -62,7 +62,7 @@
 							Background="#80D9FC" Grid.Row="1"
 							Classes="Card Hoverable">
 						<Button Classes="Accent" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
-							<TextBlock Foreground="Black" Margin="-8,-8,0,0" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+							<TextBlock Foreground="Black" Margin="-8,-8,0,0" FontSize="12" Text="18000 р." VerticalAlignment="Center" HorizontalAlignment="Center"/>
 						</Button>
 					</Border>
 				</Grid>
@@ -111,7 +111,7 @@
 							Grid.ColumnSpan="2"
 							Classes="Card Hoverable">
 							<Button Classes="Accent" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
-								<TextBlock Foreground="Black" Margin="-8,-8,0,0" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								<TextBlock Foreground="Black" Margin="-8,-8,0,0" FontSize="12" Text="Оформить заказ" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 							</Button>
 						</Border>
 

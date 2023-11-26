@@ -44,6 +44,7 @@ namespace InternetShopMobileApp.ViewModels
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     var allProducts = JsonConvert.DeserializeObject<List<ProductData>>(jsonResponse);
+                    allProducts.Reverse();
                     await Dispatcher.UIThread.InvokeAsync(() =>
                     {
                         foreach (var product in allProducts)
