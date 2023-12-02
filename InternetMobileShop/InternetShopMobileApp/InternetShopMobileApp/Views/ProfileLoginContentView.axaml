@@ -1,0 +1,72 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="800"
+			 xmlns:theme="clr-namespace:SukiUI.Theme;assembly=SukiUI"
+			 xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
+			 xmlns:material="using:Material.Icons.Avalonia"
+			 xmlns:vm="using:InternetShopMobileApp.ViewModels"
+			 x:DataType="vm:ProfileLoginContentViewModel"
+             x:Class="InternetShopMobileApp.Views.ProfileLoginContentView">
+
+	<Grid Margin="20" Height="400" VerticalAlignment="Top">
+		<Border
+			Classes="Card"
+			Margin="0,0,0,25">
+			<suki:BusyArea Name="BusySignIn">
+				<StackPanel>
+					<material:MaterialIcon
+						Foreground="{DynamicResource SukiPrimaryColor}"
+						Height="30"
+						HorizontalAlignment="Center"
+						Kind="MicrosoftEdge"
+						Margin="10"
+						Width="30" />
+
+					<TextBlock
+						FontSize="18"
+						FontWeight="DemiBold"
+						HorizontalAlignment="Center"
+						Margin="0,5,0,27"
+						Text="Войдите в свой аккаунт" />
+
+					<TextBlock
+						FontWeight="DemiBold"
+						Margin="6,0,0,3"
+						Text="Почта" />
+					<TextBox Watermark="example@mail.ru"
+							 theme:TextBoxExtensions.Prefix=""
+							 Text="{Binding SelectedLogin}"/>
+
+					<TextBlock
+						FontWeight="DemiBold"
+						Margin="6,18,0,3"
+						Text="Пароль" />
+					<TextBox
+						Margin="0,0,0,25"
+						Name="PasswordTextBox"
+						PasswordChar="*"
+						theme:TextBoxExtensions.AddDeleteButton="False"
+						Text="{Binding SelectedPassword}"/>
+				</StackPanel>
+			</suki:BusyArea>
+		</Border>
+		<Button
+			Classes="Primary Rounded"
+			HorizontalAlignment="Center"
+			Name="ButtonSignIn"
+			Command="{Binding LoginCommand}"
+			VerticalAlignment="Bottom"
+			Width="160">
+
+			<TextBlock
+				FontWeight="DemiBold"
+				Foreground="White"
+				Margin="0,0,0,0"
+				Text="Войти" />
+
+		</Button>
+	</Grid>
+
+</UserControl>

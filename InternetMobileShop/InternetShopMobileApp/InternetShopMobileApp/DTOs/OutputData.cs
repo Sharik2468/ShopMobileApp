@@ -43,6 +43,8 @@ namespace InternetShopMobileApp.DTOs
 
         public string? Surname { get; set; }
 
+        public string Roles { get; set; }
+
         public long? TelephoneNumber { get; set; }
 
         public string? Password { get; set; }
@@ -83,21 +85,15 @@ namespace InternetShopMobileApp.DTOs
     public partial class OrderItemData
     {
         public int OrderItemCode { get; set; }
-
         public int? OrderSum { get; set; }
-
+        public string? OrderSumString { get; set; }
         public int? AmountOrderItem { get; set; }
-
+        public string? AmountString { get; set; }
         public int? ProductCode { get; set; }
-
         public int? OrderCode { get; set; }
-
         public int StatusOrderItemDataId { get; set; }
-
         public virtual OrderData? OrderCodeNavigation { get; set; }
-
         public virtual ProductData? ProductCodeNavigation { get; set; }
-
         public virtual StatusOrderItemData StatusOrderItemData { get; set; } = null!;
     }
 

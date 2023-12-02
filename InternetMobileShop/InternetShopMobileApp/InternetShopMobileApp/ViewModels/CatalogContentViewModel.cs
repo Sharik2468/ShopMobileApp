@@ -34,10 +34,9 @@ namespace InternetShopMobileApp.ViewModels
 
         public async Task LoadProducts()
         {
-            HttpClient client = new HttpClient();
+            HttpClient client = HttpClientInstance.Client;
             try
             {
-                //client.Timeout = TimeSpan.FromSeconds(30); // Например, 30 секунд
 
                 var response = await client.GetAsync(URLHelper.APIURL + "/api/Product");
                 if (response.IsSuccessStatusCode)
@@ -59,20 +58,14 @@ namespace InternetShopMobileApp.ViewModels
             {
                 Console.WriteLine(ex.Message);
             }
-            finally
-            {
-                client.Dispose();
-            }
         }
 
         public async Task LoadSelectedProducts(string keyword)
         {
-            HttpClient client = new HttpClient();
+            HttpClient client = HttpClientInstance.Client;
             try
             {
-                //client.Timeout = TimeSpan.FromSeconds(30); // Например, 30 секунд
-
-                var response = await client.GetAsync(URLHelper.APIURL + "/api/Product/keywordSearch/" + keyword);
+                var response = await client.GetAsync(URLHelper.APIURL + "/api/Product/Search/" + keyword);
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
@@ -90,10 +83,6 @@ namespace InternetShopMobileApp.ViewModels
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                client.Dispose();
             }
         }
 

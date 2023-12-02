@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:InternetShopMobileApp.ViewModels"
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="800"
              x:Class="InternetShopMobileApp.Views.MainView"
+			 xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
 			 xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
 			 xmlns:app="clr-namespace:InternetShopMobileApp"
              x:DataType="vm:MainViewModel">
@@ -13,87 +14,91 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
 		<vm:MainViewModel />
 	</Design.DataContext>
+	
+	<suki:InteractiveContainer>
+		<Grid Background="#80D9FC">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<!-- Для верхней панели -->
+				<RowDefinition Height="*" />
+				<!-- Для содержимого -->
+				<RowDefinition Height="Auto" />
+				<!-- Для нижней панели -->
+			</Grid.RowDefinitions>
 
-	<Grid Background="#80D9FC">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<!-- Для верхней панели -->
-			<RowDefinition Height="*" />
-			<!-- Для содержимого -->
-			<RowDefinition Height="Auto" />
-			<!-- Для нижней панели -->
-		</Grid.RowDefinitions>
+			<StackPanel Grid.Row="0" DockPanel.Dock="Top" Background="#47BAEC" MinHeight="110">
+				<Image Margin="24,8,0,0" Source="/Resources/Снимок экрана 2023-11-01 225537.png" Width="117" Height="34" HorizontalAlignment="Left"/>
+				<Grid Height="40" Margin="24,24,24,0">
+					<TextBox HorizontalAlignment="Stretch"
+							 Margin="0,0,70,0"
+							 VerticalAlignment="Center"
+							 Watermark="Поиск по товарам"
+							 Text="{Binding SelectedKeyword}"/>
+					<Button HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding NavigateToSearchCatalog}">
+						<Image Width="20" Height="20" Source="/Resources/Search.png"/>
+					</Button>
+				</Grid>
+			</StackPanel>
 
-		<StackPanel Grid.Row="0" DockPanel.Dock="Top" Background="#47BAEC" MinHeight="110">
-			<Image Margin="24,8,0,0" Source="/Resources/Снимок экрана 2023-11-01 225537.png" Width="117" Height="34" HorizontalAlignment="Left"/>
-			<Grid Height="40" Margin="24,24,24,0">
-				<TextBox HorizontalAlignment="Stretch" 
-						 VerticalAlignment="Center" 
-						 Watermark="Поиск по товарам" 
-						 Text="{Binding SelectedKeyword}"/>
-				<Button HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" Command="{Binding NavigateToSearchCatalog}">
-					<Image Width="20" Height="20" Source="/Resources/Search.png"/>
+			<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+				<!-- Место для динамического содержимого -->
+				<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
+					<rxui:RoutedViewHost.ViewLocator>
+						<!-- See AppViewLocator.cs section below -->
+						<app:AppViewLocator />
+					</rxui:RoutedViewHost.ViewLocator>
+				</rxui:RoutedViewHost>
+			</ScrollViewer>
+
+			<Grid Grid.Row="2" DockPanel.Dock="Bottom" Background="#47BAEC" MaxHeight="64" VerticalAlignment="Bottom">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Button Command="{Binding NavigateToMain}"
+						Grid.Column="0"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Center"
+						Background="Transparent"
+						Margin="22,10,22,10"
+						Classes="Accent">
+					<Image Width="50" Height="50" Source="/Resources/Main.png"/>
+				</Button>
+
+				<Button Command="{Binding NavigateToCatalog}"
+						Grid.Column="1"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						Background="Transparent"
+						Margin="22,10,22,10"
+						Classes="Accent">
+					<Image Width="50" Height="50" Source="/Resources/Catalog.png"/>
+				</Button>
+
+				<Button Command="{Binding NavigateToBasket}"
+						Grid.Column="2"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						Background="Transparent"
+						Margin="22,10,22,10"
+						Classes="Accent">
+					<Image Width="50" Height="50" Source="/Resources/Basket.png"/>
+				</Button>
+
+				<Button Command="{Binding NavigateToProfile}"
+						Grid.Column="3"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Center"
+						Background="Transparent"
+						Margin="22,10,22,10"
+						Classes="Accent">
+					<Image Width="50" Height="50" Source="/Resources/Profile.png"/>
 				</Button>
 			</Grid>
-		</StackPanel>
-
-		<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-			<!-- Место для динамического содержимого -->
-			<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
-				<rxui:RoutedViewHost.ViewLocator>
-					<!-- See AppViewLocator.cs section below -->
-					<app:AppViewLocator />
-				</rxui:RoutedViewHost.ViewLocator>
-			</rxui:RoutedViewHost>
-		</ScrollViewer>
-
-		<Grid Grid.Row="2" DockPanel.Dock="Bottom" Background="#47BAEC" MaxHeight="64" VerticalAlignment="Bottom">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
-
-			<Button Command="{Binding NavigateToMain}" 
-					Grid.Column="0" 
-					HorizontalAlignment="Left" 
-					VerticalAlignment="Center" 
-					Background="Transparent" 
-					Margin="22,10,22,10"
-					Classes="Accent">
-				<Image Width="50" Height="50" Source="/Resources/Main.png"/>
-			</Button>
-
-			<Button Command="{Binding NavigateToCatalog}" 
-					Grid.Column="1" 
-					HorizontalAlignment="Center" 
-					VerticalAlignment="Center" 
-					Background="Transparent" 
-					Margin="22,10,22,10"
-					Classes="Accent">
-				<Image Width="50" Height="50" Source="/Resources/Catalog.png"/>
-			</Button>
-
-			<Button Command="{Binding NavigateToBasket}" 
-					Grid.Column="2" 
-					HorizontalAlignment="Center" 
-					VerticalAlignment="Center" 
-					Background="Transparent" 
-					Margin="22,10,22,10"
-					Classes="Accent">
-				<Image Width="50" Height="50" Source="/Resources/Basket.png"/>
-			</Button>
-
-			<Button Command="{Binding NavigateToProfile}" 
-					Grid.Column="3" 
-					HorizontalAlignment="Right" 
-					VerticalAlignment="Center" 
-					Background="Transparent" 
-					Margin="22,10,22,10"
-					Classes="Accent">
-				<Image Width="50" Height="50" Source="/Resources/Profile.png"/>
-			</Button>
 		</Grid>
-	</Grid>
+	</suki:InteractiveContainer>
+	
 </UserControl>

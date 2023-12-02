@@ -13,6 +13,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using System.Windows.Input;
 using System.Globalization;
+using System.Diagnostics.Metrics;
 
 namespace InternetShopMobileApp.ViewModels
 {
@@ -39,7 +40,7 @@ namespace InternetShopMobileApp.ViewModels
 
         public async void LoadProducts()
         {
-            HttpClient client = new HttpClient();
+            HttpClient client = HttpClientInstance.Client;
             try
             {
                 var response = await client.GetAsync(URLHelper.APIURL + "/api/Product");
@@ -59,18 +60,31 @@ namespace InternetShopMobileApp.ViewModels
             {
                 Console.WriteLine(ex.Message);
             }
-            finally
-            {
-                client.Dispose();
-            }
         }
 
+        public ReactiveCommand<Unit, IRoutableViewModel> NavigateToBit { get; }
+        public ReactiveCommand<Unit, IRoutableViewModel> NavigateToSmartphone { get; }
+        public ReactiveCommand<Unit, IRoutableViewModel> NavigateToTele { get; }
+        public ReactiveCommand<Unit, IRoutableViewModel> NavigateToComp { get; }
         public MainContentViewModel(IScreen screen)
         {
             HostScreen = screen;
 
             Products = new ObservableCollection<ProductData>();
             LoadProducts();
+
+            NavigateToBit = ReactiveCommand.CreateFromObservable(
+            () => HostScreen.Router.Navigate.Execute(new CatalogContentViewModel(HostScreen, "Техника для кухни."))
+        );
+            NavigateToSmartphone = ReactiveCommand.CreateFromObservable(
+            () => HostScreen.Router.Navigate.Execute(new CatalogContentViewModel(HostScreen, "Планшеты."))
+        );
+            NavigateToTele = ReactiveCommand.CreateFromObservable(
+            () => HostScreen.Router.Navigate.Execute(new CatalogContentViewModel(HostScreen, "Телевизоры и аксессуары."))
+        );
+            NavigateToComp = ReactiveCommand.CreateFromObservable(
+            () => HostScreen.Router.Navigate.Execute(new CatalogContentViewModel(HostScreen, "Комплектующие для ПК."))
+        );
         }
 
     }

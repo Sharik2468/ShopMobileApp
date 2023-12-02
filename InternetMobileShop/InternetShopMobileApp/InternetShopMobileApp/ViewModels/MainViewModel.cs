@@ -14,6 +14,7 @@ public class MainViewModel : ReactiveObject, IScreen
         get => _selectedKeyword;
         set
         {
+
             this.RaiseAndSetIfChanged(ref _selectedKeyword, value);
         }
     }
@@ -57,7 +58,7 @@ public class MainViewModel : ReactiveObject, IScreen
             () => Router.Navigate.Execute(new CatalogContentViewModel(this))
         );
         NavigateToSearchCatalog = ReactiveCommand.CreateFromObservable(
-            () => Router.Navigate.Execute(new CatalogContentViewModel(this, SelectedKeyword)),
+            () => Router.Navigate.Execute(new CatalogContentViewModel(this, "." + SelectedKeyword)),
             canNavigate
         );
 

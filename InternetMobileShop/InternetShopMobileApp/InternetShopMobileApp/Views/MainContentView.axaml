@@ -18,62 +18,72 @@
 				<ScrollViewer HorizontalScrollBarVisibility="Visible">
 					<StackPanel Orientation="Horizontal" Margin="0,0,0,30">
 
-						<Border CornerRadius="12" Margin="20" HorizontalAlignment="Left" Background="White" Width="70" Height="70">
-							<StackPanel Margin="-10,10,0,0">
-								<Button HorizontalAlignment="Center" 
-										VerticalAlignment="Center"
-										Classes="Accent">
-									<Image Width="50" Height="50" Source="/Resources/Bars1.png"/>
-								</Button>
-								<TextBlock Foreground="Black" TextAlignment="Center" Margin="10,10,0,0" TextWrapping="WrapWithOverflow" Text="Каталог товаров"/>
-							</StackPanel>
-						</Border>
+						
 
-						<StackPanel Margin="20" 
-									HorizontalAlignment="Left" 
-									Width="70" Height="70">
-							<Button Classes="Accent" 
-									HorizontalAlignment="Center" 
-									VerticalAlignment="Center" 
+						<StackPanel Margin="20"
+									HorizontalAlignment="Left"
+									Width="80" Height="70">
+							<Button Classes="Accent"
+									Command="{Binding NavigateToBit}"
+									HorizontalAlignment="Center"
+									VerticalAlignment="Center"
 									Background="Transparent"
 									Height="50"
 									Width="70">
 								<Image Width="50" Height="50" Source="/Resources/BitCathegory1.png"/>
 							</Button>
-							<TextBlock Foreground="Black" TextAlignment="Center" Margin="10,10,0,0" TextWrapping="WrapWithOverflow" Text="Бытовая техника"/>
+							<TextBlock Foreground="Black" 
+									   TextAlignment="Center" 
+									   Margin="10,10,0,0" 
+									   TextWrapping="WrapWithOverflow" 
+									   Text="Техника для кухни"/>
 						</StackPanel>
 
-						<StackPanel Margin="20" HorizontalAlignment="Left" Width="70" Height="70">
+						<StackPanel Margin="20" HorizontalAlignment="Left" Width="80" Height="70">
 							<Button Classes="Accent"
+									Command="{Binding NavigateToSmartphone}"
 									HorizontalAlignment="Center"
 									VerticalAlignment="Center"
 									Background="Transparent"
 									Height="50"
-									Width="70">								<Image Width="50" Height="50" Source="/Resources/SmartphoneCathegory1.png"/>
+									Width="70">
+								<Image Width="50" Height="50" Source="/Resources/SmartphoneCathegory1.png"/>
 							</Button>
-							<TextBlock Foreground="Black" TextAlignment="Center" Margin="10,10,0,0" TextWrapping="WrapWithOverflow" Text="Смартфоны"/>
+							<TextBlock Foreground="Black" 
+									   TextAlignment="Center" 
+									   Margin="10,10,0,0" 
+									   TextWrapping="WrapWithOverflow"
+									   Text="Планшеты"/>
 						</StackPanel>
 
-						<StackPanel Margin="20" HorizontalAlignment="Left" Width="70" Height="70">
+						<StackPanel Margin="20" HorizontalAlignment="Left" Width="80" Height="70">
 							<Button Classes="Accent"
+									Command="{Binding NavigateToTele}"
 									HorizontalAlignment="Center"
 									VerticalAlignment="Center"
 									Background="Transparent"
 									Height="50"
-									Width="70">								<Image Width="50" Height="50" Source="/Resources/TVCathegory1.png"/>
+									Width="70">
+								<Image Width="50" Height="50" Source="/Resources/TVCathegory1.png"/>
 							</Button>
 							<TextBlock Foreground="Black" TextAlignment="Center" Margin="10,10,0,0" TextWrapping="WrapWithOverflow" Text="Телевизоры"/>
 						</StackPanel>
 
-						<StackPanel Margin="20" HorizontalAlignment="Left" Width="70" Height="70">
+						<StackPanel Margin="20" HorizontalAlignment="Left" Width="80" Height="70">
 							<Button Classes="Accent"
+									Command="{Binding NavigateToComp}"
 									HorizontalAlignment="Center"
 									VerticalAlignment="Center"
 									Background="Transparent"
 									Height="50"
-									Width="70">								<Image Width="50" Height="50" Source="/Resources/ComputerCathegory1.png"/>
+									Width="70">
+								<Image Width="50" Height="50" Source="/Resources/ComputerCathegory1.png"/>
 							</Button>
-							<TextBlock Foreground="Black" TextAlignment="Center" Margin="10,10,0,0" TextWrapping="WrapWithOverflow" Text="Компьютеры"/>
+							<TextBlock Foreground="Black" 
+									   TextAlignment="Center" 
+									   Margin="10,10,0,0" 
+									   TextWrapping="WrapWithOverflow" 
+									   Text="Комплектующие"/>
 						</StackPanel>
 					</StackPanel>
 				</ScrollViewer>
