@@ -8,6 +8,6 @@ namespace InternetShopMobileApp
 {
     public static class URLHelper
     {
-        public static string APIURL = "https://c18a-212-124-6-207.ngrok-free.app";
+        public static string APIURL = "https://e5f9-212-124-6-207.ngrok-free.app";
     }
 }

@@ -91,7 +91,8 @@ namespace InternetShopMobileApp.DTOs
         public string? AmountString { get; set; }
         public int? ProductCode { get; set; }
         public int? OrderCode { get; set; }
-        public int StatusOrderItemDataId { get; set; }
+        public int? StatusOrderItemTableId { get; set; }
+        public string? StatusOrderItemDataName { get; set; }
         public virtual OrderData? OrderCodeNavigation { get; set; }
         public virtual ProductData? ProductCodeNavigation { get; set; }
         public virtual StatusOrderItemData StatusOrderItemData { get; set; } = null!;
@@ -113,7 +114,7 @@ namespace InternetShopMobileApp.DTOs
 
         public virtual ClientData? ClientCodeNavigation { get; set; }
 
-        public virtual ICollection<OrderItemData> OrderItemDatas { get; } = new List<OrderItemData>();
+        public virtual ICollection<OrderItemData> OrderItemTables { get; } = new List<OrderItemData>();
 
         public virtual SalesmanData? SalesmanCodeNavigation { get; set; }
 

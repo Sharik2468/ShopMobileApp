@@ -24,7 +24,28 @@ namespace InternetShopMobileApp.ViewModels
                 this.RaiseAndSetIfChanged(ref _user, value);
                 WelcomeUser = string.Empty;
                 RoleText = string.Empty;
-                IsLoggedIn = value != null;
+                if (value != null)
+                {
+                    if (value.Roles == "user")
+                    {
+                        IsLoggedIn = true;
+                        IsLoggedInAsUser = true;
+                        IsLoggedInAsAdmin = false;
+                    }
+
+                    if (value.Roles == "admin")
+                    {
+                        IsLoggedIn = true;
+                        IsLoggedInAsUser = false;
+                        IsLoggedInAsAdmin = true;
+                    }
+                }
+                else
+                {
+                    IsLoggedIn = false;
+                    IsLoggedInAsUser = false;
+                    IsLoggedInAsAdmin = false;
+                }
             }
         }
 
@@ -58,6 +79,26 @@ namespace InternetShopMobileApp.ViewModels
             }
         }
 
+        private bool _isLoggedInAsAdmin = false;
+        public bool IsLoggedInAsAdmin
+        {
+            get => _isLoggedInAsAdmin;
+            private set
+            {
+                this.RaiseAndSetIfChanged(ref _isLoggedInAsAdmin, value);
+            }
+        }
+
+        private bool _isLoggedInAsUser = false;
+        public bool IsLoggedInAsUser
+        {
+            get => _isLoggedInAsUser;
+            private set
+            {
+                this.RaiseAndSetIfChanged(ref _isLoggedInAsUser, value);
+            }
+        }
+
         // Reference to IScreen that owns the routable view model.
         public IScreen HostScreen { get; }
 
@@ -65,16 +106,26 @@ namespace InternetShopMobileApp.ViewModels
         public string UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
 
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToLogin { get; }
+        public ReactiveCommand<Unit, IRoutableViewModel> NavigateToPreparedPage { get; }
+        public ReactiveCommand<Unit, IRoutableViewModel> NavigateToOrderManagementPage { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> LogOff { get; }
 
         public ProfileContentViewModel(IScreen screen)
         {
             HostScreen = screen;
-            LoadUser();
             WelcomeUser = "";
+            LoadUser();
 
             NavigateToLogin = ReactiveCommand.CreateFromObservable(
             () => HostScreen.Router.Navigate.Execute(new ProfileLoginContentViewModel(HostScreen))
+        );
+
+            NavigateToPreparedPage = ReactiveCommand.CreateFromObservable(
+            () => HostScreen.Router.Navigate.Execute(new PreparedContentViewModel(HostScreen))
+        );
+
+            NavigateToOrderManagementPage = ReactiveCommand.CreateFromObservable(
+         () => HostScreen.Router.Navigate.Execute(new OrderManagementContentViewModel(HostScreen))
         );
 
             // Создайте экземпляр команды и укажите делегат для выполнения
@@ -114,16 +165,13 @@ namespace InternetShopMobileApp.ViewModels
                     };
 
                     User = newUser;
-
-                    IsLoggedIn = true;
-                    WelcomeUser = "";
-                    RoleText = "";
                     break;
                 case AccountOutput.ERROR:
                     InteractiveContainer.ShowDialog(new TextBlock() { Text = "Произошла ошибка при выполнении запроса!", Margin = new Thickness(15, 8) });
                     break;
                 case AccountOutput.UNAUTHORIZED:
                     IsLoggedIn = false;
+                    IsLoggedInAsAdmin = false;
                     break;
             }
         }

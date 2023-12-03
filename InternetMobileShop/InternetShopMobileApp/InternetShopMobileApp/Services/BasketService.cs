@@ -161,5 +161,58 @@ namespace InternetShopMobileApp.Services
                 return new BasketServiceResult { Result = BasketOutput.EXCEPTION, BasketData = ex.Message };
             }
         }
+
+        public async Task<BasketServiceResult> GetAllOrderItemStatuses()
+        {
+            try
+            {
+                var response = await client.GetAsync(URLHelper.APIURL + "/api/OrderItem/GetAllOrderItemStatuses").ConfigureAwait(false);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var data = JsonConvert.DeserializeObject<List<dynamic>>(content); // Адаптируйте тип данных, если необходимо
+
+                    return new BasketServiceResult { Result = BasketOutput.SUCCESS, BasketData = data };
+                }
+                else
+                {
+                    // Обработка ошибок запроса
+                    return new BasketServiceResult { Result = BasketOutput.ERROR };
+                }
+            }
+            catch (Exception ex)
+            {
+                // Обработка исключений при отправке запроса
+                Console.WriteLine(ex.Message);
+                return new BasketServiceResult { Result = BasketOutput.EXCEPTION, BasketData = ex.Message };
+            }
+        }
+
+        public async Task<BasketServiceResult> UpdateOrderItemStatus(int orderItemCode, int newStatus)
+        {
+            try
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(new { NewStatus = newStatus }), Encoding.UTF8, "application/json");
+                var response = await client.PutAsync(URLHelper.APIURL + $"/api/OrderItem/PutNewStatusID/{orderItemCode}/{newStatus}", content).ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Если успешно, возвращаем успех
+                    return new BasketServiceResult { Result = BasketOutput.SUCCESS };
+                }
+                else
+                {
+                    // Если статус код не успешный, возвращаем ошибку
+                    return new BasketServiceResult { Result = BasketOutput.ERROR };
+                }
+            }
+            catch (Exception ex)
+            {
+                // В случае исключения возвращаем EXCEPTION с дополнительной информацией
+                Console.WriteLine(ex.Message);
+                return new BasketServiceResult { Result = BasketOutput.EXCEPTION, BasketData = ex.Message };
+            }
+        }
+
     }
 }

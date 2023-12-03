@@ -66,7 +66,8 @@ namespace InternetShopMobileApp.ViewModels
             {
                 int? sum = 0;
                 foreach (var item in OrderItems)
-                    sum += item.OrderSum;
+                    if (item.StatusOrderItemTableId == 1)
+                        sum += item.OrderSum;
                 this.RaiseAndSetIfChanged(ref _orderItemSum, $"{sum} р.");
             }
         }
@@ -88,18 +89,22 @@ namespace InternetShopMobileApp.ViewModels
         public string UrlPathSegment { get; } = Guid.NewGuid().ToString().Substring(0, 5);
 
         public ObservableCollection<OrderItemData> OrderItems { get; private set; }
+        public ObservableCollection<StatusData> Statuses { get; private set; }
         public ReactiveCommand<int, Unit> DeleteOrderItemCommand { get; private set; }
         public ReactiveCommand<int, Unit> ChangeAmountOrderItemCommand { get; private set; }
+        public ReactiveCommand<int, Unit> ChangeStatusOrderItemCommand { get; private set; }
         public ReactiveCommand<Unit, Unit> PrepareOrderCommand { get; private set; }
 
         public BasketContentViewModel(IScreen screen)
         {
             HostScreen = screen;
             OrderItems = new ObservableCollection<OrderItemData>();
+            Statuses = new ObservableCollection<StatusData>();
             LoadOrderItems();
 
             DeleteOrderItemCommand = ReactiveCommand.CreateFromTask<int>(DeleteOrderItem);
             ChangeAmountOrderItemCommand = ReactiveCommand.CreateFromTask<int>(ChangeAmountOrderItem);
+            ChangeStatusOrderItemCommand = ReactiveCommand.CreateFromTask<int>(ChangeStatusOrderItem);
             PrepareOrderCommand = ReactiveCommand.CreateFromTask(PrepareOrder);
 
             ViewBusy = false;
@@ -130,12 +135,24 @@ namespace InternetShopMobileApp.ViewModels
                     if (userID != null && isAuthenticated)
                     {
                         var resultOrderItems = await serviceBasket.LoadItems(userID);
+                        var resultStatuses = await serviceBasket.GetAllOrderItemStatuses();
                         if (resultOrderItems != null && resultOrderItems.Result == BasketOutput.SUCCESS)
                         {
+                            foreach (var item in resultStatuses.BasketData)
+                            {
+                                StatusData newStatus = new StatusData
+                                {
+                                    StatusCode = item.statusOrderItemId.ToObject<int>(),
+                                    OrderStatus = item.statusOrderItemTable1.ToObject<string>(),
+                                };
+                                Statuses.Add(newStatus);
+                            }
+
                             foreach (var item in resultOrderItems.BasketData)
                             {
                                 item.OrderSumString = $"{item.OrderSum} р.";
                                 item.AmountString = $"Количество: {item.AmountOrderItem} шт.";
+                                item.StatusOrderItemDataName = Statuses[item.StatusOrderItemTableId - 1].OrderStatus;
                                 OrderItems.Add(item);
                             }
                             OrderItemCount = "";
@@ -189,6 +206,31 @@ namespace InternetShopMobileApp.ViewModels
             }
 
         }
+        private async Task ChangeStatusOrderItem(int orderItemID)
+        {
+            BasketService serviceBasket = new BasketService();
+
+            OrderItemData orderItem = OrderItems.Where(a => a.OrderItemCode == orderItemID).FirstOrDefault();
+            var responese = await serviceBasket.UpdateOrderItemStatus(orderItemID, orderItem.StatusOrderItemTableId == 1 ? 2 : 1);
+
+            switch (responese.Result)
+            {
+                case BasketOutput.SUCCESS:
+                    InteractiveContainer.ShowToast(new TextBlock() { Text = "Состояние товара изменено!", Margin = new Thickness(15, 8) }, 5);
+                    OrderItems.Clear();
+                    ViewBusy = true;
+                    LoadOrderItems();
+                    break;
+
+                case BasketOutput.ERROR:
+                    InteractiveContainer.ShowToast(new TextBlock() { Text = "Не удалось изменить состояние заказа!", Margin = new Thickness(15, 8) }, 5);
+                    break;
+
+                case BasketOutput.EXCEPTION:
+                    InteractiveContainer.ShowDialog(new TextBlock() { Text = "Не удалось изменить состояние заказа!", Margin = new Thickness(15, 8) });
+                    break;
+            }
+        }
 
         private async Task ChangeAmountOrderItem(int orderItemID)
         {
@@ -225,7 +267,9 @@ namespace InternetShopMobileApp.ViewModels
             {
                 case BasketOutput.SUCCESS:
                     InteractiveContainer.ShowToast(new TextBlock() { Text = "Заказ оформлен!", Margin = new Thickness(15, 8) }, 5);
-
+                    OrderItems.Clear();
+                    ViewBusy = true;
+                    LoadOrderItems();
                     break;
 
                 case BasketOutput.ERROR:

@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="800"
+			 xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
+			 xmlns:vm="using:InternetShopMobileApp.ViewModels"
+			 xmlns:conv="using:InternetShopMobileApp.Converters"
+			 xmlns:dtos="using:InternetShopMobileApp.DTOs"
+			 x:DataType="vm:OrderManagementContentViewModel"
+             x:Class="InternetShopMobileApp.Views.OrderManagementContentView">
+	<suki:BusyArea x:Name="PART_BusyArea" IsBusy="{Binding ViewBusy}">
+		<Grid>
+			<ItemsControl ItemsSource="{Binding Orders}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Border CornerRadius="12"
+								Background="White"
+								Margin="16"
+								Classes="Card Hoverable">
+							<suki:GroupBox>
+								<suki:GroupBox.Header>
+									<StackPanel Orientation="Vertical">
+										<TextBlock Text="{Binding OrderCode, StringFormat='Код заказа: {0}'}"/>
+										<Button Content="Отменить заказ" />
+										<Button Content="Заказ оплачен" />
+									</StackPanel>
+								</suki:GroupBox.Header>
+									<WrapPanel Orientation="Horizontal">
+										<ItemsControl ItemsSource="{Binding OrderItemTables}">
+											<ItemsControl.ItemsPanel>
+												<ItemsPanelTemplate>
+													<WrapPanel Orientation="Horizontal" />
+													<!-- Установка ориентации для элементов -->
+												</ItemsPanelTemplate>
+											</ItemsControl.ItemsPanel>
+											<ItemsControl.ItemTemplate>
+												<DataTemplate>
+													<RadioButton Classes="GigaChips">
+														<StackPanel Orientation="Vertical" Margin="12">
+															<TextBlock Text="{Binding ProductCode, StringFormat='Код товара: {0}'}"/>
+															<TextBlock Text="{Binding AmountOrderItem, StringFormat='Количество товара: {0} штук'}"/>
+															<TextBlock Text="{Binding OrderSum, StringFormat='Сумма заказа: {0} рублей'}"/>
+															<Button Content="Подробнее о товаре"/>
+														</StackPanel>
+													</RadioButton>
+												</DataTemplate>
+											</ItemsControl.ItemTemplate>
+										</ItemsControl>
+									</WrapPanel>
+								<!--<TextBlock Text="{Binding TotalOrderSum, StringFormat='Общая сумма заказа(руб): {0}'}"/>-->
+							</suki:GroupBox>
+						</Border>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</Grid>
+	</suki:BusyArea>
+</UserControl>

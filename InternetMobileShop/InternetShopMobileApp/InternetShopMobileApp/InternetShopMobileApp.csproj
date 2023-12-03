@@ -66,6 +66,9 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Resources.resx</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\OrderManagementContentView.axaml.cs">
+	    <DependentUpon>OrderManagementContentView.axaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
