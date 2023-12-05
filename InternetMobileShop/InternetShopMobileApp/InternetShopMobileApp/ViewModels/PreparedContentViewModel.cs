@@ -8,6 +8,8 @@ using ReactiveUI;
 using SukiUI.Controls;
 using System;
 using System.Collections.ObjectModel;
+using System.Reactive;
+using System.Threading.Tasks;
 
 namespace InternetShopMobileApp.ViewModels
 {
@@ -33,6 +35,8 @@ namespace InternetShopMobileApp.ViewModels
                 this.RaiseAndSetIfChanged(ref _viewBusy, value);
             }
         }
+        public ReactiveCommand<int, Unit> InfoCommand { get; private set; }
+        public ReactiveCommand<int, Unit> DeleteOrderCommand { get; private set; }
 
         // Reference to IScreen that owns the routable view model.
         public IScreen HostScreen { get; }
@@ -46,9 +50,33 @@ namespace InternetShopMobileApp.ViewModels
         {
             HostScreen = screen;
             Orders = new ObservableCollection<OrderData>();
+            InfoCommand = ReactiveCommand.CreateFromTask<int>(AdditionalInfo);
+            DeleteOrderCommand = ReactiveCommand.CreateFromTask<int>(DeleteOrder);
 
             LoadPreparedOrder();
             ViewBusy = true;
+        }
+        private async Task AdditionalInfo(int productCode)
+        {
+            HostScreen.Router.Navigate.Execute(new ProductContentViewModel(HostScreen, productCode));
+        }
+        private async Task DeleteOrder(int orderCode)
+        {
+            OrderService service = new OrderService();
+
+            var result = await service.DeleteOrder(orderCode);
+
+            switch (result.Result)
+            {
+                case OrderOutput.SUCCESS:
+                    InteractiveContainer.ShowToast(new TextBlock() { Text = "Заказ успешно удалён!", Margin = new Thickness(15, 8) }, 5);
+                    Orders.Clear();
+                    ViewBusy = true;
+                    LoadPreparedOrder();
+                    break;
+                case OrderOutput.ERROR: break;
+                case OrderOutput.EXCEPTION: break;
+            }
         }
 
         private async void LoadPreparedOrder()

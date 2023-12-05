@@ -83,5 +83,55 @@ namespace InternetShopMobileApp.Services
                 return new OrderServiceResult { Result = OrderOutput.EXCEPTION, OrderData = ex.Message };
             }
         }
+
+        public async Task<OrderServiceResult> DeleteOrder(int orderCode)
+        {
+            try
+            {
+                var response = await _client.PutAsync(URLHelper.APIURL + $"/api/Order/DeleteOrder/{orderCode}", null).ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Если запрос успешно обработан
+                    return new OrderServiceResult { Result = OrderOutput.SUCCESS };
+                }
+                else
+                {
+                    // Обработка ошибок запроса
+                    return new OrderServiceResult { Result = OrderOutput.ERROR };
+                }
+            }
+            catch (Exception ex)
+            {
+                // Обработка исключений при отправке запроса
+                Console.WriteLine(ex.Message);
+                return new OrderServiceResult { Result = OrderOutput.EXCEPTION, OrderData = ex.Message };
+            }
+        }
+
+        public async Task<OrderServiceResult> PayOrder(int orderCode, int userID)
+        {
+            try
+            {
+                var response = await _client.PutAsync(URLHelper.APIURL + $"/api/Order/PaidOrder/{orderCode}/{userID}", null).ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Если запрос успешно обработан
+                    return new OrderServiceResult { Result = OrderOutput.SUCCESS };
+                }
+                else
+                {
+                    // Обработка ошибок запроса
+                    return new OrderServiceResult { Result = OrderOutput.ERROR };
+                }
+            }
+            catch (Exception ex)
+            {
+                // Обработка исключений при отправке запроса
+                Console.WriteLine(ex.Message);
+                return new OrderServiceResult { Result = OrderOutput.EXCEPTION, OrderData = ex.Message };
+            }
+        }
     }
 }

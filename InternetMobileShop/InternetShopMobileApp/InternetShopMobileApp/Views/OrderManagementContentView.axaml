@@ -8,7 +8,8 @@
 			 xmlns:conv="using:InternetShopMobileApp.Converters"
 			 xmlns:dtos="using:InternetShopMobileApp.DTOs"
 			 x:DataType="vm:OrderManagementContentViewModel"
-             x:Class="InternetShopMobileApp.Views.OrderManagementContentView">
+             x:Class="InternetShopMobileApp.Views.OrderManagementContentView"
+			 x:Name="ManagementItem">
 	<suki:BusyArea x:Name="PART_BusyArea" IsBusy="{Binding ViewBusy}">
 		<Grid>
 			<ItemsControl ItemsSource="{Binding Orders}">
@@ -22,8 +23,12 @@
 								<suki:GroupBox.Header>
 									<StackPanel Orientation="Vertical">
 										<TextBlock Text="{Binding OrderCode, StringFormat='Код заказа: {0}'}"/>
-										<Button Content="Отменить заказ" />
-										<Button Content="Заказ оплачен" />
+										<Button Content="Отменить заказ" 
+												Command="{Binding #ManagementItem.((vm:OrderManagementContentViewModel)DataContext).DeleteOrderCommand}"
+												CommandParameter="{Binding OrderCode}"/>
+										<Button Content="Заказ оплачен"
+												Command="{Binding #ManagementItem.((vm:OrderManagementContentViewModel)DataContext).CompleteOrderCommand}"
+												CommandParameter="{Binding OrderCode}"/>
 									</StackPanel>
 								</suki:GroupBox.Header>
 									<WrapPanel Orientation="Horizontal">
@@ -31,24 +36,23 @@
 											<ItemsControl.ItemsPanel>
 												<ItemsPanelTemplate>
 													<WrapPanel Orientation="Horizontal" />
-													<!-- Установка ориентации для элементов -->
 												</ItemsPanelTemplate>
 											</ItemsControl.ItemsPanel>
 											<ItemsControl.ItemTemplate>
 												<DataTemplate>
-													<RadioButton Classes="GigaChips">
+													<RadioButton Classes="GigaChips"
+																 Command="{Binding #ManagementItem.((vm:OrderManagementContentViewModel)DataContext).InfoCommand}"
+															     CommandParameter="{Binding ProductCode}">
 														<StackPanel Orientation="Vertical" Margin="12">
 															<TextBlock Text="{Binding ProductCode, StringFormat='Код товара: {0}'}"/>
 															<TextBlock Text="{Binding AmountOrderItem, StringFormat='Количество товара: {0} штук'}"/>
 															<TextBlock Text="{Binding OrderSum, StringFormat='Сумма заказа: {0} рублей'}"/>
-															<Button Content="Подробнее о товаре"/>
 														</StackPanel>
 													</RadioButton>
 												</DataTemplate>
 											</ItemsControl.ItemTemplate>
 										</ItemsControl>
 									</WrapPanel>
-								<!--<TextBlock Text="{Binding TotalOrderSum, StringFormat='Общая сумма заказа(руб): {0}'}"/>-->
 							</suki:GroupBox>
 						</Border>
 					</DataTemplate>

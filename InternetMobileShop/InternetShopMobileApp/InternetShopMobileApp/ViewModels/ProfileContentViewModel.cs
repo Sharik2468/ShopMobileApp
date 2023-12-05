@@ -108,6 +108,7 @@ namespace InternetShopMobileApp.ViewModels
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToLogin { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToPreparedPage { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToOrderManagementPage { get; }
+        public ReactiveCommand<Unit, IRoutableViewModel> NavigateToAddProductPage { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> LogOff { get; }
 
         public ProfileContentViewModel(IScreen screen)
@@ -126,6 +127,10 @@ namespace InternetShopMobileApp.ViewModels
 
             NavigateToOrderManagementPage = ReactiveCommand.CreateFromObservable(
          () => HostScreen.Router.Navigate.Execute(new OrderManagementContentViewModel(HostScreen))
+        );
+
+            NavigateToAddProductPage = ReactiveCommand.CreateFromObservable(
+         () => HostScreen.Router.Navigate.Execute(new AddProductContentViewModel(HostScreen))
         );
 
             // Создайте экземпляр команды и укажите делегат для выполнения

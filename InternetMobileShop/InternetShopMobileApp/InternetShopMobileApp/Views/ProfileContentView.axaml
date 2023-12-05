@@ -19,6 +19,7 @@
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
 
 				<Grid.ColumnDefinitions>
@@ -32,7 +33,8 @@
 				<Button IsVisible="{Binding !IsLoggedIn}" Content="Зарегестрироваться" Foreground="Black" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" Margin="0,0,0,24"/>
 				<Button Command="{Binding NavigateToPreparedPage}" IsVisible="{Binding IsLoggedInAsUser}" Content="Перейти на страницу неоплаченных заказов" Foreground="Black" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center"/>
 				<Button Command="{Binding NavigateToOrderManagementPage}" IsVisible="{Binding IsLoggedInAsAdmin}" Content="Перейти на страницу управления заказами" Foreground="Black" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center"/>
-				<Button Command="{Binding LogOff}" IsVisible="{Binding IsLoggedIn}" Content="Выйти" Foreground="Black" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Center" Margin="0,0,0,24"/>
+				<Button Command="{Binding NavigateToAddProductPage}" IsVisible="{Binding IsLoggedInAsAdmin}" Content="Перейти на страницу добавления товара" Foreground="Black" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Center"/>
+				<Button Command="{Binding LogOff}" IsVisible="{Binding IsLoggedIn}" Content="Выйти" Foreground="Black" Grid.Row="8" Grid.Column="0" HorizontalAlignment="Center" Margin="0,0,0,24"/>
 
 			</Grid>
 		</Border>

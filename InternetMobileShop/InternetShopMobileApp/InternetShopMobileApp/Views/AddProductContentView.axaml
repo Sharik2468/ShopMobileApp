@@ -1,0 +1,98 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="800"
+			 xmlns:suki="clr-namespace:SukiUI.Controls;assembly=SukiUI"
+			 xmlns:vm="using:InternetShopMobileApp.ViewModels"
+			 xmlns:conv="using:InternetShopMobileApp.Converters"
+			 xmlns:dtos="using:InternetShopMobileApp.DTOs"
+			 x:DataType="vm:AddProductContentViewModel"
+             x:Class="InternetShopMobileApp.Views.AddProductContentView">
+	<DockPanel>
+		<Border CornerRadius="12"
+				Background="White"
+				Margin="16"
+				Classes="Card Hoverable"
+				DockPanel.Dock="Top">
+			<TabControl SelectedIndex="{Binding StepperIndex}">
+
+				<TabItem Header="">
+					<StackPanel>
+						<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Text="Главная информация продукта"/>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*">
+							<TextBlock Text="Название:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<TextBox Grid.Column="1" VerticalAlignment="Center"/>
+
+							<TextBlock Grid.Row="1" Text="Описание:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"
+									 AcceptsReturn="True" TextWrapping="Wrap"
+									 ScrollViewer.VerticalScrollBarVisibility="Auto"
+									 MinHeight="100" />
+						</Grid>
+					</StackPanel>
+				</TabItem>
+
+				<TabItem Header="">
+					<StackPanel>
+						<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Text="Даты продукта"/>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*">
+							<TextBlock Text="Дата создания:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<DatePicker Grid.Column="1" VerticalAlignment="Center"/>
+
+							<TextBlock Grid.Row="1" Text="Гарантия:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<NumericUpDown Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
+						</Grid>
+					</StackPanel>
+				</TabItem>
+
+				<TabItem Header="">
+					<StackPanel>
+						<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Text="Цены продукта"/>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*">
+							<TextBlock Text="Закупочная стоимость:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<NumericUpDown Grid.Column="1" VerticalAlignment="Center"/>
+
+							<TextBlock Grid.Row="1" Text="Рыночная стоимость:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<NumericUpDown Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
+						</Grid>
+					</StackPanel>
+				</TabItem>
+
+				<TabItem Header="">
+					<StackPanel>
+						<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Text="Дополнительная информация"/>
+						<Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*,*">
+							<TextBlock Text="Изображение:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<Button Content="Добавьте изображение" Grid.Column="1" VerticalAlignment="Center"/>
+
+							<TextBlock Grid.Row="1" Text="В наличии:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<NumericUpDown Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
+
+							<TextBlock Grid.Row="2" Text="Категория:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<ComboBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
+						</Grid>
+					</StackPanel>
+				</TabItem>
+
+				<TabItem Header="">
+					<StackPanel>
+						<TextBlock HorizontalAlignment="Center" Text="Подтверждение" FontSize="18" FontWeight="Bold"/>
+						<Grid  RowDefinitions="*,*,*">
+							<TextBlock Text="Процесс заполнения информации о товаре" HorizontalAlignment="Center"/>
+							<suki:WaveProgress Grid.Row="1" HorizontalAlignment="Center" Value="50" IsTextVisible="True" />
+							<Button Grid.Row="2" Content="Добавить товар"/>
+						</Grid>
+					</StackPanel>
+				</TabItem>
+
+			</TabControl>
+		</Border>
+
+		<Grid RowDefinitions="100,10" ColumnDefinitions="*,*" DockPanel.Dock="Bottom">
+			<suki:Stepper Grid.Row="0" Grid.ColumnSpan="2" Name="myStep" DockPanel.Dock="Top" Index="{Binding StepperIndex}"/>
+			<Button Grid.Row="1" Content="Предыдущий шаг" Command="{Binding DecStepperIndexCommand}"/>
+			<Button Grid.Row="1" Grid.Column="1" Content="Следующий шаг" Command="{Binding AddStepperIndexCommand}"/>
+		</Grid>
+	</DockPanel>
+</UserControl>

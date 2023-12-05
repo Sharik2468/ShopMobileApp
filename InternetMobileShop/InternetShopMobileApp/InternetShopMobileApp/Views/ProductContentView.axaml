@@ -27,7 +27,7 @@
 						<Border Margin="10" Height="42" CornerRadius="12" Grid.Column="0" Background="#CFF1FF">
 							<TextBlock Foreground="Black"
 									   FontSize="12"
-									   Text="{Binding PriceText}"
+									   Text="{Binding SelectedProduct.MarketPriceProduct, StringFormat=' {0} р.'}"
 									   VerticalAlignment="Center"
 									   HorizontalAlignment="Center"/>
 						</Border>
@@ -36,7 +36,7 @@
 							<TextBlock
 								Foreground="Black"
 								FontSize="12"
-								Text="{Binding AvailableStockText}"
+								Text="{Binding SelectedProduct.NumberInStock, StringFormat='В наличии: {0}'}"
 								VerticalAlignment="Center"
 								HorizontalAlignment="Center"/>
 						</Border>
