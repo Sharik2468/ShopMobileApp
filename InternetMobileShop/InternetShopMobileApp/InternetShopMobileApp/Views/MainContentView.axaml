@@ -18,7 +18,7 @@
 				<ScrollViewer HorizontalScrollBarVisibility="Visible">
 					<StackPanel Orientation="Horizontal" Margin="0,0,0,30">
 
-						
+
 
 						<StackPanel Margin="20"
 									HorizontalAlignment="Left"
@@ -32,10 +32,10 @@
 									Width="70">
 								<Image Width="50" Height="50" Source="/Resources/BitCathegory1.png"/>
 							</Button>
-							<TextBlock Foreground="Black" 
-									   TextAlignment="Center" 
-									   Margin="10,10,0,0" 
-									   TextWrapping="WrapWithOverflow" 
+							<TextBlock Foreground="Black"
+									   TextAlignment="Center"
+									   Margin="10,10,0,0"
+									   TextWrapping="WrapWithOverflow"
 									   Text="Техника для кухни"/>
 						</StackPanel>
 
@@ -49,9 +49,9 @@
 									Width="70">
 								<Image Width="50" Height="50" Source="/Resources/SmartphoneCathegory1.png"/>
 							</Button>
-							<TextBlock Foreground="Black" 
-									   TextAlignment="Center" 
-									   Margin="10,10,0,0" 
+							<TextBlock Foreground="Black"
+									   TextAlignment="Center"
+									   Margin="10,10,0,0"
 									   TextWrapping="WrapWithOverflow"
 									   Text="Планшеты"/>
 						</StackPanel>
@@ -79,10 +79,10 @@
 									Width="70">
 								<Image Width="50" Height="50" Source="/Resources/ComputerCathegory1.png"/>
 							</Button>
-							<TextBlock Foreground="Black" 
-									   TextAlignment="Center" 
-									   Margin="10,10,0,0" 
-									   TextWrapping="WrapWithOverflow" 
+							<TextBlock Foreground="Black"
+									   TextAlignment="Center"
+									   Margin="10,10,0,0"
+									   TextWrapping="WrapWithOverflow"
 									   Text="Комплектующие"/>
 						</StackPanel>
 					</StackPanel>
@@ -94,12 +94,12 @@
 		<TextBlock DockPanel.Dock="Top" Text=" Новые товары" Foreground="Black" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
 
-		<ListBox ItemsSource="{Binding Products}"
-				 Background="#80D9FC"
-				 Margin="16,20,16,10"
-				 Padding="0"
-				 SelectedItem="{Binding SelectedProduct}">
-			<ListBox.ItemTemplate>
+		<ItemsControl ItemsSource="{Binding CurrentPageProducts}"
+					  Background="#80D9FC"
+					  Margin="16,20,16,10"
+					  Padding="0"
+					  DockPanel.Dock="Top">
+			<ItemsControl.ItemTemplate>
 				<DataTemplate DataType="dtos:ProductData">
 					<Border x:Name="ClickableBorder" Classes="Card Hoverable" CornerRadius="12" Background="#47BAEC">
 						<Grid>
@@ -119,23 +119,31 @@
 							<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding NameProduct}" TextAlignment="Center" VerticalAlignment="Center"/>
 
 							<Border Grid.Row="1" Grid.Column="0" CornerRadius="12" Background="#CFF1FF" Margin="10">
-								<TextBlock Foreground="Black" FontSize="12" Text="{Binding MarketPriceProduct}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								<TextBlock Foreground="Black" FontSize="12" Text="{Binding MarketPriceProduct, StringFormat=' {0} р.'}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 							</Border>
 
 							<Border Grid.Row="1" Grid.Column="1" CornerRadius="12" Background="#CFF1FF" Margin="10">
-								<TextBlock Foreground="Black" FontSize="12" Text="{Binding NumberInStock}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								<TextBlock Foreground="Black" FontSize="12" Text="{Binding NumberInStock, StringFormat='Осталось: {0} шт.'}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 							</Border>
 
-							<Border Grid.Row="1" Grid.Column="2" CornerRadius="12" Background="#80D9FC" Margin="10">
-								<Button Classes="Accent" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
-									<TextBlock Foreground="Black" Margin="-8,-8,0,0" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-								</Button>
-							</Border>
+							<Button Grid.Row="1" Grid.Column="2"
+									Classes="Primary" Background="#80D9FC"
+									VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+									Command="{Binding #MainContentViewControl.((vm:MainContentViewModel)DataContext).NavigateToProduct}"
+									CommandParameter="{Binding ProductCode}">
+								<TextBlock Foreground="Black" FontSize="12" Text="Подробнее" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+							</Button>
 						</Grid>
-					</Border>
+					</Border >
 				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+
+		<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center">
+			<Button Command="{Binding PrevPageCommand}" Content="Назад"/>
+			<TextBlock Text="{Binding CurrentPage}" VerticalAlignment="Center"/>
+			<Button Command="{Binding NextPageCommand}" Content="Вперед"/>
+		</StackPanel>
 
 	</DockPanel>
 

@@ -1,5 +1,7 @@
 ﻿using ReactiveUI;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 
@@ -7,7 +9,6 @@ namespace InternetShopMobileApp.ViewModels;
 
 public class MainViewModel : ReactiveObject, IScreen
 {
-
     private string _selectedKeyword;
     public string SelectedKeyword
     {
@@ -19,9 +20,28 @@ public class MainViewModel : ReactiveObject, IScreen
         }
     }
 
+    private bool _isSearchVisible;
+    public bool IsSearchVisible
+    {
+        get => _isSearchVisible;
+        set => this.RaiseAndSetIfChanged(ref _isSearchVisible, value);
+    }
+
     // The Router associated with this Screen.
     // Required by the IScreen interface.
-    public RoutingState Router { get; } = new RoutingState();
+    public RoutingState router = new RoutingState();
+    public RoutingState Router
+    {
+        get
+        {
+            //UpdateSearchVisibility(router.GetCurrentViewModel());
+            return router;
+        }
+        set
+        {
+            this.RaiseAndSetIfChanged(ref router, value);
+        }
+    }
 
     // The command that navigates a user to first view model.
 
@@ -62,6 +82,18 @@ public class MainViewModel : ReactiveObject, IScreen
             canNavigate
         );
 
+        Router.NavigationStack.CollectionChanged += (sender, e) =>
+        {
+            UpdateSearchVisibility();
+        };
+
         Router.Navigate.Execute(new MainContentViewModel(this));
+    }
+
+    private void UpdateSearchVisibility()
+    {
+        var currentViewModel = Router.NavigationStack.LastOrDefault();
+        // Здесь вы можете установить IsSearchVisible в true или false в зависимости от типа текущего ViewModel
+        IsSearchVisible = currentViewModel is CatalogContentViewModel || currentViewModel is MainContentViewModel;
     }
 }

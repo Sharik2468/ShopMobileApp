@@ -11,52 +11,53 @@
 		<conv:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
 	</UserControl.Resources>
 
-	
-		<DockPanel>
-			<Border Classes="Card Hoverable" CornerRadius="12" Background="White" DockPanel.Dock="Top" Margin="16">
-				<StackPanel>
-					<Image Margin="80,18,80,20" Source="{Binding SelectedProduct.Image, Converter={StaticResource ByteArrayToImageConverter}}"/>
-					<TextBlock Margin="16,0,16,24" FontSize="20" Text="{Binding SelectedProduct.NameProduct}"/>
-					<Grid Margin="0,0,0,24">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="*"/>
-							<ColumnDefinition Width="*"/>
-							<ColumnDefinition Width="*"/>
-						</Grid.ColumnDefinitions>
 
-						<Border Margin="10" Height="42" CornerRadius="12" Grid.Column="0" Background="#CFF1FF">
-							<TextBlock Foreground="Black"
+	<DockPanel>
+		<Border Classes="Card Hoverable" CornerRadius="12" Background="White" DockPanel.Dock="Top" Margin="16">
+			<StackPanel>
+				<Image Margin="80,18,80,20" Source="{Binding SelectedProduct.Image, Converter={StaticResource ByteArrayToImageConverter}}"/>
+				<TextBlock Margin="16,0,16,24" FontSize="20" Text="{Binding SelectedProduct.NameProduct}"/>
+				<Grid Margin="0,0,0,24">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+					<Border Margin="10" Height="42" CornerRadius="12" Grid.Column="0" Background="#CFF1FF">
+						<TextBlock Foreground="Black"
+								   FontSize="12"
+								   Text="{Binding SelectedProduct.MarketPriceProduct, StringFormat=' {0} р.'}"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Center"/>
+					</Border>
+
+					<Border Margin="10" Height="42" CornerRadius="12" Grid.Column="1" Background="#CFF1FF" >
+						<TextBlock
+							Foreground="Black"
+							FontSize="12"
+							Text="{Binding SelectedProduct.NumberInStock, StringFormat='В наличии: {0}'}"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Center"/>
+					</Border>
+
+					<Border Classes="Card Hoverable" Margin="10" Height="42" CornerRadius="12" Grid.Column="2" Background="#80D9FC" >
+						<Button Classes="Accent" Command="{Binding AddToBasket}" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+							<TextBlock Margin="-3,-8,0,0"
+									   Foreground="Black"
 									   FontSize="12"
-									   Text="{Binding SelectedProduct.MarketPriceProduct, StringFormat=' {0} р.'}"
+									   Text="Купить"
 									   VerticalAlignment="Center"
 									   HorizontalAlignment="Center"/>
-						</Border>
+						</Button>
+					</Border>
+				</Grid>
+				<Button Content="Удалить товар" Command="{Binding DeleteProduct}" IsVisible="{Binding IsAdmin}"/>
+			</StackPanel>
+		</Border>
 
-						<Border Margin="10" Height="42" CornerRadius="12" Grid.Column="1" Background="#CFF1FF" >
-							<TextBlock
-								Foreground="Black"
-								FontSize="12"
-								Text="{Binding SelectedProduct.NumberInStock, StringFormat='В наличии: {0}'}"
-								VerticalAlignment="Center"
-								HorizontalAlignment="Center"/>
-						</Border>
-
-						<Border Classes="Card Hoverable" Margin="10" Height="42" CornerRadius="12" Grid.Column="2" Background="#80D9FC" >
-							<Button Classes="Accent" Command="{Binding AddToBasket}" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
-								<TextBlock Margin="-3,-8,0,0"
-										   Foreground="Black"
-										   FontSize="12"
-										   Text="Купить"
-										   VerticalAlignment="Center"
-										   HorizontalAlignment="Center"/>
-							</Button>
-						</Border>
-					</Grid>
-				</StackPanel>
-			</Border>
-
-			<Border Classes="Card Hoverable" CornerRadius="12" Background="White" DockPanel.Dock="Top" Margin="16">
-				<TextBlock Foreground="Black" FontSize="16" Margin="16" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProduct.Description}"/>
-			</Border>
-		</DockPanel>
+		<Border Classes="Card Hoverable" CornerRadius="12" Background="White" DockPanel.Dock="Top" Margin="16">
+			<TextBlock Foreground="Black" FontSize="16" Margin="16" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProduct.Description}"/>
+		</Border>
+	</DockPanel>
 </UserControl>

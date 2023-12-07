@@ -1,10 +1,9 @@
-﻿using Avalonia.Media.Imaging;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace InternetShopMobileApp.DTOs
 {
@@ -82,7 +81,7 @@ namespace InternetShopMobileApp.DTOs
         public virtual ICollection<SalesmanData> SalesmanDatas { get; } = new List<SalesmanData>();
     }
 
-    public partial class OrderItemData
+    public partial class OrderItemData : INotifyPropertyChanged
     {
         public int OrderItemCode { get; set; }
         public int? OrderSum { get; set; }
@@ -96,6 +95,24 @@ namespace InternetShopMobileApp.DTOs
         public virtual OrderData? OrderCodeNavigation { get; set; }
         public virtual ProductData? ProductCodeNavigation { get; set; }
         public virtual StatusOrderItemData StatusOrderItemData { get; set; } = null!;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private double _visibleAmount = 1;
+        public double VisibleAmount
+        {
+            get => _visibleAmount;
+            set
+            {
+                _visibleAmount = value;
+                OnPropertyChanged("VisibleAmount");
+            }
+        }
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 
     public partial class OrderData

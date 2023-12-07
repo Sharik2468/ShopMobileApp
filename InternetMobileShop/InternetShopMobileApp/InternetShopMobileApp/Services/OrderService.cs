@@ -66,7 +66,7 @@ namespace InternetShopMobileApp.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    var orders = JsonConvert.DeserializeObject<List<OrderData>>(content); // Адаптируйте тип данных, если необходимо
+                    var orders = JsonConvert.DeserializeObject<List<OrderData>>(content);
 
                     return new OrderServiceResult { Result = OrderOutput.SUCCESS, OrderData = orders };
                 }

@@ -7,20 +7,21 @@
 			 xmlns:dtos="using:InternetShopMobileApp.DTOs"
 			 xmlns:conv="using:InternetShopMobileApp.Converters"
 			 x:DataType="vm:CatalogContentViewModel"
+			 x:Name="Catalog"
              x:Class="InternetShopMobileApp.Views.CatalogContentView">
 	<UserControl.Resources>
 		<conv:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
 	</UserControl.Resources>
 	<DockPanel>
-		
-		<ListBox ItemsSource="{Binding Products}"
-				 Background="#80D9FC"
-				 Margin="16,20,16,10"
-				 Padding="0"
-				 SelectedItem="{Binding SelectedProduct}">
-			<ListBox.ItemTemplate>
+
+		<ItemsControl ItemsSource="{Binding CurrentPageProducts}"
+					  Background="#80D9FC"
+					  Margin="16,20,16,10"
+					  Padding="0"
+					  DockPanel.Dock="Top">
+			<ItemsControl.ItemTemplate>
 				<DataTemplate DataType="dtos:ProductData">
-					<Border x:Name="ClickableBorder" CornerRadius="12" Background="#47BAEC">
+					<Border x:Name="ClickableBorder" Classes="Card Hoverable" CornerRadius="12" Background="#47BAEC">
 						<Grid>
 							<Grid.RowDefinitions>
 								<RowDefinition/>
@@ -38,24 +39,32 @@
 							<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding NameProduct}" TextAlignment="Center" VerticalAlignment="Center"/>
 
 							<Border Grid.Row="1" Grid.Column="0" CornerRadius="12" Background="#CFF1FF" Margin="10">
-								<TextBlock Foreground="Black" FontSize="12" Text="{Binding MarketPriceProduct}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								<TextBlock Foreground="Black" FontSize="12" Text="{Binding MarketPriceProduct, StringFormat=' {0} р.'}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 							</Border>
 
 							<Border Grid.Row="1" Grid.Column="1" CornerRadius="12" Background="#CFF1FF" Margin="10">
-								<TextBlock Foreground="Black" FontSize="12" Text="{Binding NumberInStock}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								<TextBlock Foreground="Black" FontSize="12" Text="{Binding NumberInStock, StringFormat='Осталось: {0} шт.'}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 							</Border>
 
-							<Border Grid.Row="1" Grid.Column="2" CornerRadius="12" Background="#80D9FC" Margin="10">
-								<Button Classes="Accent" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
-									<TextBlock Foreground="Black" Margin="-8,-8,0,0" FontSize="12" Text="Купить" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-								</Button>
-							</Border>
+							<Button Grid.Row="1" Grid.Column="2"
+									Classes="Primary" Background="#80D9FC"
+									VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+									Command="{Binding #Catalog.((vm:CatalogContentViewModel)DataContext).NavigateToProduct}"
+									CommandParameter="{Binding ProductCode}">
+								<TextBlock Foreground="Black" FontSize="12" Text="Подробнее" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+							</Button>
 						</Grid>
 					</Border>
 				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-		
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+
+		<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center">
+			<Button Command="{Binding PrevPageCommand}" Content="Назад"/>
+			<TextBlock Text="{Binding CurrentPage}" VerticalAlignment="Center"/>
+			<Button Command="{Binding NextPageCommand}" Content="Вперед"/>
+		</StackPanel>
+
 	</DockPanel>
 
 </UserControl>

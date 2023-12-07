@@ -35,16 +35,6 @@ namespace InternetShopMobileApp.ViewModels
             }
         }
 
-        private double _orderItemAmount = 1;
-        public double OrderItemAmount
-        {
-            get => _orderItemAmount;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _orderItemAmount, value);
-            }
-        }
-
         private string _orderItemCount;
         public string OrderItemCount
         {
@@ -78,7 +68,7 @@ namespace InternetShopMobileApp.ViewModels
             get => _viewBusy;
             set
             {
-                this.RaiseAndSetIfChanged(ref _viewBusy, OrderItems.Count() == 0);
+                this.RaiseAndSetIfChanged(ref _viewBusy, value);
             }
         }
 
@@ -91,9 +81,10 @@ namespace InternetShopMobileApp.ViewModels
         public ObservableCollection<OrderItemData> OrderItems { get; private set; }
         public ObservableCollection<StatusData> Statuses { get; private set; }
         public ReactiveCommand<int, Unit> DeleteOrderItemCommand { get; private set; }
-        public ReactiveCommand<int, Unit> ChangeAmountOrderItemCommand { get; private set; }
+        public ReactiveCommand<OrderItemData, Unit> ChangeAmountOrderItemCommand { get; private set; }
         public ReactiveCommand<int, Unit> ChangeStatusOrderItemCommand { get; private set; }
         public ReactiveCommand<Unit, Unit> PrepareOrderCommand { get; private set; }
+        public ReactiveCommand<int, Unit> InfoCommand { get; private set; }
 
         public BasketContentViewModel(IScreen screen)
         {
@@ -103,15 +94,23 @@ namespace InternetShopMobileApp.ViewModels
             LoadOrderItems();
 
             DeleteOrderItemCommand = ReactiveCommand.CreateFromTask<int>(DeleteOrderItem);
-            ChangeAmountOrderItemCommand = ReactiveCommand.CreateFromTask<int>(ChangeAmountOrderItem);
+            ChangeAmountOrderItemCommand = ReactiveCommand.CreateFromTask<OrderItemData>(ChangeAmountOrderItem);
             ChangeStatusOrderItemCommand = ReactiveCommand.CreateFromTask<int>(ChangeStatusOrderItem);
             PrepareOrderCommand = ReactiveCommand.CreateFromTask(PrepareOrder);
+            InfoCommand = ReactiveCommand.CreateFromTask<int>(AdditionalInfo);
 
             ViewBusy = false;
         }
 
+        private async Task AdditionalInfo(int productCode)
+        {
+            HostScreen.Router.Navigate.Execute(new ProductContentViewModel(HostScreen, productCode));
+        }
+
         private async void LoadOrderItems()
         {
+            ViewBusy = true;
+
             AccountService serviceAccount = new AccountService();
             BasketService serviceBasket = new BasketService();
 
@@ -162,11 +161,13 @@ namespace InternetShopMobileApp.ViewModels
                         else if (resultOrderItems.Result == BasketOutput.ERROR)
                         {
                             InteractiveContainer.ShowToast(new TextBlock() { Text = "Добавьте товары в корзину!", Margin = new Thickness(15, 8) }, 5);
+                            ViewBusy = false;
                         }
                     }
                     break;
 
                 case AccountOutput.UNAUTHORIZED:
+                    ViewBusy = false;
                     Dispatcher.UIThread.Post(() =>
                     {
                         InteractiveContainer.ShowDialog(new ErrorDialogContent());
@@ -187,8 +188,6 @@ namespace InternetShopMobileApp.ViewModels
             {
                 case BasketOutput.SUCCESS:
                     InteractiveContainer.ShowToast(new TextBlock() { Text = "Элемент заказа удалён!", Margin = new Thickness(15, 8) }, 5);
-                    //OrderItems.Clear();
-                    //LoadOrderItems();
 
                     OrderItems.Remove(OrderItems.FirstOrDefault(a => a.OrderItemCode == orderItemCode));
                     OrderItemCount = "";
@@ -197,10 +196,12 @@ namespace InternetShopMobileApp.ViewModels
                     break;
 
                 case BasketOutput.ERROR:
+                    ViewBusy = false;
                     InteractiveContainer.ShowToast(new TextBlock() { Text = "Не удалось удалить элемент заказа!", Margin = new Thickness(15, 8) }, 5);
                     break;
 
                 case BasketOutput.EXCEPTION:
+                    ViewBusy = false;
                     InteractiveContainer.ShowDialog(new TextBlock() { Text = "Не удалось удалить элемент заказа!", Margin = new Thickness(15, 8) });
                     break;
             }
@@ -223,20 +224,22 @@ namespace InternetShopMobileApp.ViewModels
                     break;
 
                 case BasketOutput.ERROR:
+                    ViewBusy = false;
                     InteractiveContainer.ShowToast(new TextBlock() { Text = "Не удалось изменить состояние заказа!", Margin = new Thickness(15, 8) }, 5);
                     break;
 
                 case BasketOutput.EXCEPTION:
+                    ViewBusy = false;
                     InteractiveContainer.ShowDialog(new TextBlock() { Text = "Не удалось изменить состояние заказа!", Margin = new Thickness(15, 8) });
                     break;
             }
         }
 
-        private async Task ChangeAmountOrderItem(int orderItemID)
+        private async Task ChangeAmountOrderItem(OrderItemData orderItem)
         {
             BasketService serviceBasket = new BasketService();
 
-            var responese = await serviceBasket.UpdateOrderItemQuantity(orderItemID, ((int)OrderItemAmount));
+            var responese = await serviceBasket.UpdateOrderItemQuantity(orderItem.OrderItemCode, ((int)orderItem.VisibleAmount));
 
             switch (responese.Result)
             {
@@ -248,10 +251,12 @@ namespace InternetShopMobileApp.ViewModels
                     break;
 
                 case BasketOutput.ERROR:
+                    ViewBusy = false;
                     InteractiveContainer.ShowToast(new TextBlock() { Text = "Не удалось изменить элемент заказа!", Margin = new Thickness(15, 8) }, 5);
                     break;
 
                 case BasketOutput.EXCEPTION:
+                    ViewBusy = false;
                     InteractiveContainer.ShowDialog(new TextBlock() { Text = "Не удалось изменить элемент заказа!", Margin = new Thickness(15, 8) });
                     break;
             }
@@ -273,10 +278,12 @@ namespace InternetShopMobileApp.ViewModels
                     break;
 
                 case BasketOutput.ERROR:
+                    ViewBusy = false;
                     InteractiveContainer.ShowToast(new TextBlock() { Text = "Не удалось оформить заказ!", Margin = new Thickness(15, 8) }, 5);
                     break;
 
                 case BasketOutput.EXCEPTION:
+                    ViewBusy = false;
                     InteractiveContainer.ShowDialog(new TextBlock() { Text = "Не удалось оформить заказ!", Margin = new Thickness(15, 8) });
                     break;
             }

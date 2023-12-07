@@ -8,7 +8,8 @@
 			 xmlns:conv="using:InternetShopMobileApp.Converters"
 			 xmlns:dtos="using:InternetShopMobileApp.DTOs"
 			 x:DataType="vm:AddProductContentViewModel"
-             x:Class="InternetShopMobileApp.Views.AddProductContentView">
+             x:Class="InternetShopMobileApp.Views.AddProductContentView"
+			 x:Name="AddProductPage">
 	<DockPanel>
 		<Border CornerRadius="12"
 				Background="White"
@@ -21,11 +22,11 @@
 					<StackPanel>
 						<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Text="Главная информация продукта"/>
 						<Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*">
-							<TextBlock Text="Название:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-							<TextBox Grid.Column="1" VerticalAlignment="Center"/>
+							<TextBlock Text="Название:" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12"/>
+							<TextBox Grid.Column="1" VerticalAlignment="Center" Margin="12" Text="{Binding NameProduct}"/>
 
-							<TextBlock Grid.Row="1" Text="Описание:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-							<TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"
+							<TextBlock Grid.Row="1" Text="Описание:" Margin="12" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<TextBox Grid.Column="1" Text="{Binding Description}" Grid.Row="1" Margin="12" VerticalAlignment="Center"
 									 AcceptsReturn="True" TextWrapping="Wrap"
 									 ScrollViewer.VerticalScrollBarVisibility="Auto"
 									 MinHeight="100" />
@@ -35,53 +36,64 @@
 
 				<TabItem Header="">
 					<StackPanel>
-						<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Text="Даты продукта"/>
+						<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="12" Text="Даты продукта"/>
 						<Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*">
-							<TextBlock Text="Дата создания:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-							<DatePicker Grid.Column="1" VerticalAlignment="Center"/>
+							<TextBlock Text="Дата создания:" Margin="12" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<DatePicker Grid.Column="1" Margin="12" SelectedDate="{Binding DateOfManufactureProduct}" VerticalAlignment="Center"/>
 
-							<TextBlock Grid.Row="1" Text="Гарантия:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-							<NumericUpDown Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
+							<TextBlock Grid.Row="1" Margin="12" Text="Гарантия:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<NumericUpDown Grid.Column="1" Grid.Row="1" Text="{Binding BestBeforeDateProduct}" Margin="12" VerticalAlignment="Center"/>
 						</Grid>
 					</StackPanel>
 				</TabItem>
 
 				<TabItem Header="">
 					<StackPanel>
-						<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Text="Цены продукта"/>
+						<TextBlock HorizontalAlignment="Center" FontSize="18" Margin="12" FontWeight="Bold" Text="Цены продукта"/>
 						<Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*">
-							<TextBlock Text="Закупочная стоимость:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-							<NumericUpDown Grid.Column="1" VerticalAlignment="Center"/>
+							<TextBlock Text="Закупочная стоимость:" Margin="12" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<NumericUpDown Grid.Column="1" Margin="12" Value="{Binding PurchasePriceProduct}" VerticalAlignment="Center"/>
 
-							<TextBlock Grid.Row="1" Text="Рыночная стоимость:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-							<NumericUpDown Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
+							<TextBlock Grid.Row="1" Text="Рыночная стоимость:" Margin="12" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<NumericUpDown Grid.Column="1" Grid.Row="1" Margin="12" Value="{Binding MarketPriceProduct}" VerticalAlignment="Center"/>
 						</Grid>
 					</StackPanel>
 				</TabItem>
 
 				<TabItem Header="">
 					<StackPanel>
-						<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Text="Дополнительная информация"/>
+						<TextBlock HorizontalAlignment="Center" Margin="12" FontSize="18" FontWeight="Bold" Text="Дополнительная информация"/>
 						<Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*,*">
-							<TextBlock Text="Изображение:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-							<Button Content="Добавьте изображение" Grid.Column="1" VerticalAlignment="Center"/>
+							<TextBlock Text="Изображение:" Margin="12" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<Button Content="Добавьте изображение" Grid.Column="1" Margin="12" VerticalAlignment="Center"
+									Command="{Binding UploadImageCommand}"/>
 
-							<TextBlock Grid.Row="1" Text="В наличии:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-							<NumericUpDown Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
+							<TextBlock Grid.Row="1" Text="В наличии:" Margin="12" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<NumericUpDown Grid.Column="1" Grid.Row="1" Value="{Binding NumberInStock}" Margin="12" VerticalAlignment="Center"/>
 
-							<TextBlock Grid.Row="2" Text="Категория:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-							<ComboBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
+							<TextBlock Grid.Row="2" Text="Категория:" Margin="12" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+							<ComboBox Grid.Column="1" Grid.Row="2" Margin="12"
+									  SelectedItem="{Binding Category}"
+									  ItemsSource="{Binding Cathegory}"
+									  VerticalAlignment="Center">
+								<ComboBox.ItemTemplate>
+									<DataTemplate>
+										<TextBlock Text="{Binding CategoryName}"/>
+									</DataTemplate>
+								</ComboBox.ItemTemplate>
+							</ComboBox>
+
 						</Grid>
 					</StackPanel>
 				</TabItem>
 
 				<TabItem Header="">
 					<StackPanel>
-						<TextBlock HorizontalAlignment="Center" Text="Подтверждение" FontSize="18" FontWeight="Bold"/>
+						<TextBlock HorizontalAlignment="Center" Text="Подтверждение" Margin="12" FontSize="18" FontWeight="Bold"/>
 						<Grid  RowDefinitions="*,*,*">
-							<TextBlock Text="Процесс заполнения информации о товаре" HorizontalAlignment="Center"/>
-							<suki:WaveProgress Grid.Row="1" HorizontalAlignment="Center" Value="50" IsTextVisible="True" />
-							<Button Grid.Row="2" Content="Добавить товар"/>
+							<TextBlock Text="Процесс заполнения информации о товаре" Margin="12" HorizontalAlignment="Center"/>
+							<suki:WaveProgress Grid.Row="1" HorizontalAlignment="Center" Value="{Binding Progression}" Margin="12" IsTextVisible="True" />
+							<Button Grid.Row="2" Content="Добавить товар" Command="{Binding AddProductCommand}" Margin="12"/>
 						</Grid>
 					</StackPanel>
 				</TabItem>
@@ -89,10 +101,10 @@
 			</TabControl>
 		</Border>
 
-		<Grid RowDefinitions="100,10" ColumnDefinitions="*,*" DockPanel.Dock="Bottom">
+		<Grid RowDefinitions="100,10" ColumnDefinitions="*,*" DockPanel.Dock="Bottom" Margin="16">
 			<suki:Stepper Grid.Row="0" Grid.ColumnSpan="2" Name="myStep" DockPanel.Dock="Top" Index="{Binding StepperIndex}"/>
-			<Button Grid.Row="1" Content="Предыдущий шаг" Command="{Binding DecStepperIndexCommand}"/>
-			<Button Grid.Row="1" Grid.Column="1" Content="Следующий шаг" Command="{Binding AddStepperIndexCommand}"/>
+			<Button Grid.Row="1" Content="Предыдущий шаг" Command="{Binding DecStepperIndexCommand}" Margin="0,0,0,100"/>
+			<Button Grid.Row="1" Grid.Column="1" Content="Следующий шаг" Command="{Binding AddStepperIndexCommand}" Margin="0,0,0,100"/>
 		</Grid>
 	</DockPanel>
 </UserControl>

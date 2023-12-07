@@ -5,6 +5,7 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using System.Reactive;
 using System.Threading.Tasks;
@@ -14,17 +15,26 @@ namespace InternetShopMobileApp.ViewModels
     public class CatalogContentViewModel : ReactiveObject, IRoutableViewModel
     {
         public ObservableCollection<ProductData> Products { get; set; }
+        private const int PageSize = 5; // количество элементов на странице
 
-        private ProductData _selectedProduct;
-        public ProductData SelectedProduct
+        private int _currentPage = 1;
+        public int CurrentPage
         {
-            get => _selectedProduct;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _selectedProduct, value);
-                HostScreen.Router.Navigate.Execute(new ProductContentViewModel(HostScreen, SelectedProduct));
-            }
+            get => _currentPage;
+            set { this.RaiseAndSetIfChanged(ref _currentPage, value); }
         }
+
+        private int _totalPages;
+        public int TotalPages
+        {
+            get => _totalPages;
+            set { this.RaiseAndSetIfChanged(ref _totalPages, value); }
+        }
+
+        public ObservableCollection<ProductData> CurrentPageProducts { get; } = new ObservableCollection<ProductData>();
+        // Команды для навигации между страницами
+        public ReactiveCommand<Unit, Unit> NextPageCommand { get; }
+        public ReactiveCommand<Unit, Unit> PrevPageCommand { get; }
 
         // Reference to IScreen that owns the routable view model.
         public IScreen HostScreen { get; }
@@ -37,21 +47,24 @@ namespace InternetShopMobileApp.ViewModels
             HttpClient client = HttpClientInstance.Client;
             try
             {
-
                 var response = await client.GetAsync(URLHelper.APIURL + "/api/Product");
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var allProducts = JsonConvert.DeserializeObject<List<ProductData>>(jsonResponse);
-                    allProducts.Reverse();
-                    await Dispatcher.UIThread.InvokeAsync(() =>
-                    {
-                        foreach (var product in allProducts)
-                        {
-                            Products.Add(product);
-                        }
-                    });
+                    var products = JsonConvert.DeserializeObject<List<ProductData>>(jsonResponse);
 
+
+                    // Ограничиваем загрузку продуктов для текущей страницы
+                    products.Reverse();
+                    var filterProducts = products.Where(a => a.NumberInStock != 0);
+                    Products.Clear();
+                    foreach (var product in filterProducts)
+                    {
+                        Products.Add(product);
+                    }
+
+                    TotalPages = (int)Math.Ceiling(Products.Count / (double)PageSize);
+                    UpdateCurrentPageProducts();
                 }
             }
             catch (Exception ex)
@@ -70,13 +83,18 @@ namespace InternetShopMobileApp.ViewModels
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     var allProducts = JsonConvert.DeserializeObject<List<ProductData>>(jsonResponse);
-                    await Dispatcher.UIThread.InvokeAsync(() =>
+
+                    // Ограничиваем загрузку продуктов для текущей страницы
+                    allProducts.Reverse();
+                    var filterProducts = allProducts.Where(a => a.NumberInStock != 0);
+                    Products.Clear();
+                    foreach (var product in filterProducts)
                     {
-                        foreach (var product in allProducts)
-                        {
-                            Products.Add(product);
-                        }
-                    });
+                        Products.Add(product);
+                    }
+
+                    TotalPages = (int)Math.Ceiling(Products.Count / (double)PageSize);
+                    UpdateCurrentPageProducts();
 
                 }
             }
@@ -86,24 +104,53 @@ namespace InternetShopMobileApp.ViewModels
             }
         }
 
+        public ReactiveCommand<int, Unit> NavigateToProduct { get; }
         public CatalogContentViewModel(IScreen screen, string keyword = null)
         {
             HostScreen = screen;
-            GoToProductPage = ReactiveCommand.Create(RunTheThing);
+            NavigateToProduct = ReactiveCommand.CreateFromTask<int>(AdditionalInfo);
 
             Products = new ObservableCollection<ProductData>();
             if (keyword == null)
                 LoadProducts().ConfigureAwait(false);
             else
                 LoadSelectedProducts(keyword).ConfigureAwait(false);
+
+            NextPageCommand = ReactiveCommand.Create(NextPage, this.WhenAnyValue(x => x.CurrentPage, x => x.TotalPages, (currentPage, totalPages) => currentPage < totalPages));
+            PrevPageCommand = ReactiveCommand.Create(PrevPage, this.WhenAnyValue(x => x.CurrentPage, currentPage => currentPage > 1));
         }
 
-        private IRoutableViewModel RunTheThing()
+        private void NextPage()
         {
-            HostScreen.Router.Navigate.Execute(new ProductContentViewModel(HostScreen));
-            return null;
+            if (CurrentPage < TotalPages)
+            {
+                CurrentPage++;
+                UpdateCurrentPageProducts();
+            }
         }
 
-        public ReactiveCommand<Unit, IRoutableViewModel> GoToProductPage { get; }
+        private void PrevPage()
+        {
+            if (CurrentPage > 1)
+            {
+                CurrentPage--;
+                UpdateCurrentPageProducts();
+            }
+        }
+
+        private void UpdateCurrentPageProducts()
+        {
+            var startIndex = (CurrentPage - 1) * PageSize;
+            CurrentPageProducts.Clear();
+            foreach (var product in Products.Skip(startIndex).Take(PageSize))
+            {
+                CurrentPageProducts.Add(product);
+            }
+        }
+
+        private async Task AdditionalInfo(int productCode)
+        {
+            HostScreen.Router.Navigate.Execute(new ProductContentViewModel(HostScreen, productCode));
+        }
     }
 }

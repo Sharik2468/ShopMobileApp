@@ -14,6 +14,7 @@ namespace InternetShopMobileApp.ViewModels
     public class ProductContentViewModel : ReactiveObject, IRoutableViewModel
     {
         public ReactiveCommand<Unit, IRoutableViewModel> AddToBasket { get; }
+        public ReactiveCommand<Unit, Unit> DeleteProduct { get; }
 
         private ProductData _selectedProduct;
         public ProductData SelectedProduct
@@ -22,6 +23,16 @@ namespace InternetShopMobileApp.ViewModels
             set
             {
                 this.RaiseAndSetIfChanged(ref _selectedProduct, value);
+            }
+        }
+
+        private bool _isAdmin;
+        public bool IsAdmin
+        {
+            get => _isAdmin;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _isAdmin, value);
             }
         }
 
@@ -41,14 +52,36 @@ namespace InternetShopMobileApp.ViewModels
 
             // Создайте экземпляр команды и укажите делегат для выполнения
             AddToBasket = ReactiveCommand.CreateFromTask<Unit, IRoutableViewModel>(AddproductToBasket);
+            DeleteProduct = ReactiveCommand.Create(DeleteCurrentProduct);
+            LoadUser();
         }
+
+        private async void DeleteCurrentProduct()
+        {
+            ProductService service = new ProductService();
+
+            var result = await service.DeleteProduct(SelectedProduct.ProductCode);
+
+            switch (result.Result)
+            {
+                case ProductOutput.SUCCESS:
+                    InteractiveContainer.ShowToast(new TextBlock() { Text = "Товар удалён!", Margin = new Thickness(15, 8) }, 5);
+                    HostScreen.Router.Navigate.Execute(new MainContentViewModel(HostScreen));
+                    break;
+                case ProductOutput.ERROR: break;
+                case ProductOutput.EXCEPTION: break;
+            }
+        }
+
         public ProductContentViewModel(IScreen screen, int productCode)
         {
             HostScreen = screen;
             LoadCurrentProduct(productCode);
+            LoadUser();
 
             // Создайте экземпляр команды и укажите делегат для выполнения
             AddToBasket = ReactiveCommand.CreateFromTask<Unit, IRoutableViewModel>(AddproductToBasket);
+            DeleteProduct = ReactiveCommand.Create(DeleteCurrentProduct);
         }
         private async void LoadCurrentProduct(int productCode)
         {
@@ -61,6 +94,20 @@ namespace InternetShopMobileApp.ViewModels
                 case ProductOutput.SUCCESS: SelectedProduct = result.ProductData; break;
                 case ProductOutput.ERROR: break;
                 case ProductOutput.EXCEPTION: break;
+            }
+        }
+
+        private async void LoadUser()
+        {
+            AccountService service = new AccountService();
+
+            var result = await service.IsAuthentificated();
+
+            switch (result.Result)
+            {
+                case AccountOutput.SUCCESS: IsAdmin = result.UserData.userRole.ToObject<string>() == "admin" ? true : false; break;
+                case AccountOutput.ERROR: break;
+                case AccountOutput.UNAUTHORIZED: IsAdmin = false; break;
             }
         }
 
